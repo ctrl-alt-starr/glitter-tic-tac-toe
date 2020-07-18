@@ -38,12 +38,6 @@ def jstoflask():
     else:
         print("position not available")
         return jsonify(0)
-    
-@app.route('/flasktojs')
-def flasktojs():
-    data={1:'Welcome', 2:'to', 
-            3:'Geeks', 4:'for', 
-            5:'Geeks'} 
-    return jsonify(data) 
+
 if __name__=="__main__":
    app.run(debug=True)

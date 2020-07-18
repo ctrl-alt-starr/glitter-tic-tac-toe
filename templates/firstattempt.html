@@ -40,9 +40,8 @@
 
 
 
-<header>
-    <div id="title">Tic-Tac-Toe!</div>
-</header>
+
+
 <button id="help" onclick="help()">HELP</button></a>
 
 <body>
@@ -51,9 +50,8 @@
         <table>
             <tr>
 
-                <td id="00" onclick="human(1)"><img id="moon1" style="width:100px"></td>
+                <td id="00 " onclick="human(1)"><img id="moon1" style="width:100px"></td>
                 <td class="vert" id="01 " onclick="human(2)"><img id="moon2" style="width:100px">
-
                 </td>
                 <td id="02 " onclick="human(3)"><img id="moon3" style="width:100px"></td>
             </tr>
@@ -69,20 +67,30 @@
             </tr>
         </table>
     </div>
-    <div id="grid">
+    <form id="grid">
+        <div>
+            <h5>Which game would you like to play?</h5>
+        </div>
+        <div class="select">
+            <select name="slct" id="slct">
+    <option selected disabled>Choose an option</option>
+    <option value="1">Tic Tac Toe</option>
+    <option value="2">Tac Toe Tic</option>
+    <option value="3">Number Tic Tac Toe</option>
+  </select>
+        </div>
+        <div>
+            <h5>How many players are playing?</h5>
+        </div>
         <div id="player buttons">
             <button id="player">Single player</button>
             <button id="player">Double player</button></div>
-        <div><button id="gender"><img id="character" src="http://vignette1.wikia.nocookie.net/draconis-realm/images/0/01/Iskenderun1.png/revision/latest?cb=20150720171935"></img></button>
-            <button id="gender"><img id="character" src="https://i.pinimg.com/originals/69/b1/7a/69b17a6ee6ef177938247f7755848b9b.png"></img></button></div>
-        <div class="range-slider">
-            <div>
-                <h5 id="difficlty">Choose the difficulty of the game:</h5>
-            </div>
-            <input class="range-slider__range" type="range" value="100" min="0" max="8">
-            </input>
+        <div>
+            <h5 id="difficlty">Choose the difficulty of the game:</h5>
         </div>
-    </div>
-</body>
+        <input class="range-slider__range" type="range" value="100" min="0" max="8">
+        </input>
+        <button type="button" id="new-game" class="btn btn-primary">New game</button>
 
-<footer> Developed by Varshaa KS and Uma Meenakshi </footer>
+
+        <footer> Developed by Varshaa KS and Uma Meenakshi </footer>

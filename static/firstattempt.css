@@ -1,163 +1,185 @@
 #title {
-    font-family: Georgia, serif;
-    font-size: 90px;
-    letter-spacing: 5px;
-    word-spacing: 6px;
-    color: #191970;
-    font-weight: 900;
-    margin-left: 350px;
+  font-family: Georgia, serif;
+  font-size: 90px;
+  letter-spacing: 5px;
+  word-spacing: 6px;
+  color: #191970;
+  font-weight: 900;
+  margin-left: 350px;
 }
 
 footer {
-    font-family: Georgia, serif;
-    font-size: 9px;
-    letter-spacing: 5px;
-    word-spacing: 6px;
-    color: white;
-    font-weight: 900;
-    margin-top: auto;
-    margin-bottom: 0px;
+  font-family: Georgia, serif;
+  font-size: 9px;
+  letter-spacing: 5px;
+  word-spacing: 6px;
+  color: white;
+  font-weight: 900;
+  margin-top: auto;
+  margin-bottom: 0px;
 }
 
 body {
-    background: radial-gradient(circle farthest-corner at 1.5% 1.4%, #9fe3ff 0%, #ffb1db 100.2%);
+  background: radial-gradient(circle farthest-corner at 1.5% 1.4%, #9fe3ff 0%, #ffb1db 100.2%);
 }
 
 #help {
-    float: right;
-    margin-bottom: 0px;
-    padding: 20px;
+  float: right;
+  margin-bottom: 0px;
+  padding: 20px;
+  background: black;
+  color: white;
 }
 
 td {
-    width: 150px;
-    height: 150px;
-    cursor: pointer;
-}
-
-td:hover {
-    background-image: url("https://i.gifer.com/origin/b1/b195bd28939ffec5324c85eacd9e5196_w200.gif");
-    background-size: cover;
-    color: #ffffff;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
 }
 
 table {
-    margin-right: 100px;
-    margin-left: auto;
-    float: right;
+  margin-top: 20px;
+  margin-right: 100px;
+  margin-left: auto;
+  float: right;
 }
 
 .vert {
-    border-left: 5px solid #000000;
-    border-right: 5px solid #000000;
+  border-left: 5px solid black;
+  border-right: 5px solid black;
 }
 
 .hori {
-    border-top: 5px solid #000000;
-    border-bottom: 5px solid #000000;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
 }
 
 #grid {
-    -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-    box-shadow: 5px 5px 15px 5px #ee0ccb;
-    height: 300px;
-    width: 300px;
-    border: 15px;
-    padding: 50px;
-    background: black;
-    margin-top: 5px;
-    margin-left: 10px;
-    border-radius: 5em;
+  height: 450px;
+  width: 300px;
+  border: 15px;
+  padding: 50px;
+  background: black;
+  margin-top: 5px;
+  margin-left: 10px;
+  border-radius: 5em;
 }
 
 button {
-    -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-    box-shadow: 5px 5px 15px 5px #ee0ccb;
-    background: #eeb4e5;
-    padding: 5px 0;
-    border: 1px solid #333;
-    color: #333;
-    font-weight: 100;
-    text-transform: uppercase;
-    font-size: 10px;
-    margin-left: 5px;
-    letter-spacing: 3px;
-    -webkit-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
+  background: #eeb4e5;
+  padding: 5px 0;
+  border: 1px solid #333;
+  color: #333;
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 10px;
+  margin-left: 5px;
+  letter-spacing: 3px;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 
 button:hover {
-    background: #000000;
-    color: #ffffff;
-    border-radius: 50em;
+  background: #000000;
+  color: #ffffff;
+  border-radius: 50em;
 }
 
 #character {
-    background-color: black;
-    height: 100px;
-    width: 80px;
-    margin-left: 10x;
-    border-radius: 50em;
+  background-color: black;
+  height: 100px;
+  width: 80px;
+  margin-left: 10x;
+  border-radius: 50em;
 }
 
 #character:hover {
-    -webkit-box-shadow: 10px 10px 20px 10px #000000;
-    box-shadow: 10px 10px 20px 10px #000000;
+  -webkit-box-shadow: 10px 10px 20px 10px #000000;
+  box-shadow: 10px 10px 20px 10px #000000;
 }
 
 #gender {
-    border-radius: 50em;
-    background-color: black;
-    border: none;
-    margin-left: 35px;
-    margin-top: 60px;
-    -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-    box-shadow: 5px 5px 15px 5px #ee0ccb;
-    cursor: pointer;
+  border-radius: 50em;
+  background-color: black;
+  border: none;
+  margin-left: 35px;
+  margin-top: 60px;
+  -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
+  box-shadow: 5px 5px 15px 5px #ee0ccb;
+  cursor: pointer;
 }
 
 .range-slider__range {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 250px;
-    height: 10px;
-    outline: none;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #ee0ccb;
-    -webkit-box-shadow: 2px 2px 5px 2px #FFB5F9;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  width: 250px;
+  height: 10px;
+  outline: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #ee0ccb;
 }
 
 .range-slider__range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background-color: #303395;
-    border: 5px solid #ffffff;
-    border-radius: 80%;
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background-color: #303395;
+  border: 5px solid #ffffff;
+  border-radius: 80%;
+  cursor: pointer;
+}
+
+.range-slider__range::-webkit-slider-thumb:hover {
+  background: #000000;
+  border-radius: 50em;
 }
 
 h5 {
-    color: pink;
-    font-size: 20px;
+  color: pink;
+  font-size: 20px;
 }
 
 h6 {
-    color: pink;
-    font-size: 20px;
+  color: pink;
+  font-size: 20px;
 }
 
 #help_script {
-    background: #000000;
+  background: #000000;
 }
 
-hr {
-    -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-    box-shadow: 5px 5px 15px 5px #ee0ccb;
+select {
+  background: #eeb4e5;
+  padding: 5px 0;
+  border: 1px solid #333;
+  color: #333;
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 10px;
+  margin-left: 5px;
+  letter-spacing: 3px;
+  -webkit-transition: all .2s ease-in- pointer;
+  transition: all .2s ease-in- pointer;
 }
 
+select:hover {
+  background: #000000;
+  color: #ffffff;
+  border-radius: 50em;
+}
 
+#new-game {
+  margin-top: 40px;
+  padding: 10px;
+  margin-left: 80px;
+  background: white;
+}
+
+#new-game:hover {
+  color: white;
+  background: black;
+}
 /*# sourceMappingURL=firstattempt.css.map */

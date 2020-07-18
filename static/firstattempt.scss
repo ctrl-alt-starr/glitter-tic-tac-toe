@@ -27,39 +27,35 @@ body {
     float: right;
     margin-bottom: 0px;
     padding: 20px;
+    background: black;
+    color: white;
 }
 
 td {
     width: 150px;
     height: 150px;
     cursor: pointer;
-    &:hover {
-        background-image: url('https://i.gifer.com/origin/b1/b195bd28939ffec5324c85eacd9e5196_w200.gif');
-        background-size: cover;
-        color: #ffffff;
-    }
 }
 
 table {
+    margin-top: 20px;
     margin-right: 100px;
     margin-left: auto;
     float: right;
 }
 
 .vert {
-    border-left: 5px solid #000000;
-    border-right: 5px solid #000000;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
 }
 
 .hori {
-    border-top: 5px solid #000000;
-    border-bottom: 5px solid #000000;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
 }
 
 #grid {
-    -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-    box-shadow: 5px 5px 15px 5px #ee0ccb;
-    height: 300px;
+    height: 450px;
     width: 300px;
     border: 15px;
     padding: 50px;
@@ -70,8 +66,6 @@ table {
 }
 
 button {
-    -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-    box-shadow: 5px 5px 15px 5px #ee0ccb;
     background: #eeb4e5;
     padding: 5px 0;
     border: 1px solid #333;
@@ -121,7 +115,6 @@ button {
     border-radius: 5px;
     margin-bottom: 10px;
     background-color: #ee0ccb;
-    -webkit-box-shadow: 2px 2px 5px 2px #FFB5F9;
 }
 
 .range-slider__range::-webkit-slider-thumb {
@@ -133,6 +126,10 @@ button {
     border: 5px solid #ffffff;
     border-radius: 80%;
     cursor: pointer;
+    &:hover {
+        background: #000000;
+        border-radius: 50em;
+    }
 }
 
 h5 {
@@ -149,7 +146,31 @@ h6 {
     background: #000000;
 }
 
-hr {
-    -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-    box-shadow: 5px 5px 15px 5px #ee0ccb;
+select {
+    background: #eeb4e5;
+    padding: 5px 0;
+    border: 1px solid #333;
+    color: #333;
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-left: 5px;
+    letter-spacing: 3px;
+    transition: all .2s ease-in- pointer;
+    &:hover {
+        background: #000000;
+        color: #ffffff;
+        border-radius: 50em;
+    }
+}
+
+#new-game {
+    margin-top: 40px;
+    padding: 10px;
+    margin-left: 80px;
+    background: white;
+    &:hover {
+        color: white;
+        background: black;
+    }
 }
