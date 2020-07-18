@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Tic-Tac_Toe</title>
+    <link rel="stylesheet" type="text/css" href="static/firstattempt.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+        function human(id) {
+            $(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: "/jstoflask",
+                    data: {
+                        1: id
+                    },
+
+                    success: function(data) {
+                        if (data != 0) {
+                            click1 = 'moon' + id
+                            console.log(click1)
+                            document.getElementById(click1).src = "/static/moon.png"
+                            click2 = 'moon' + data[0]
+                            console.log(click2)
+                            document.getElementById(click2).src = "/static/star.png"
+
+                        }
+                    }
+
+
+                });
+            });
+
+
+
+
+        }
+    </script>
+
+</head>
+
+
+
+<header>
+    <div id="title">Tic-Tac-Toe!</div>
+</header>
+<button id="help" onclick="help()">HELP</button></a>
+
+<body>
+    <img id="help_script"></img>
+    <div>
+        <table>
+            <tr>
+
+                <td id="00" onclick="human(1)"><img id="moon1" style="width:100px"></td>
+                <td class="vert" id="01 " onclick="human(2)"><img id="moon2" style="width:100px">
+
+                </td>
+                <td id="02 " onclick="human(3)"><img id="moon3" style="width:100px"></td>
+            </tr>
+            <tr>
+                <td class="hori" id="10" onclick="human(4)"><img id="moon4" style="width:100px"></td>
+                <td class="vert hori" id="11" onclick="human(5)"><img id="moon5" style="width:100px"></td>
+                <td class="hori" id="12" onclick="human(6)"><img id="moon6" style="width:100px"></td>
+            </tr>
+            <tr>
+                <td id="20" onclick="human(7)"><img id="moon7" style="width:100px"></td>
+                <td class="vert" id="21" onclick="human(8)"><img id="moon8" style="width:100px"></td>
+                <td id="22" onclick="human(9)"><img id="moon9" style="width:100px"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="grid">
+        <div id="player buttons">
+            <button id="player">Single player</button>
+            <button id="player">Double player</button></div>
+        <div><button id="gender"><img id="character" src="http://vignette1.wikia.nocookie.net/draconis-realm/images/0/01/Iskenderun1.png/revision/latest?cb=20150720171935"></img></button>
+            <button id="gender"><img id="character" src="https://i.pinimg.com/originals/69/b1/7a/69b17a6ee6ef177938247f7755848b9b.png"></img></button></div>
+        <div class="range-slider">
+            <div>
+                <h5 id="difficlty">Choose the difficulty of the game:</h5>
+            </div>
+            <input class="range-slider__range" type="range" value="100" min="0" max="8">
+            </input>
+        </div>
+    </div>
+</body>
+
+<footer> Developed by Varshaa KS and Uma Meenakshi </footer>
