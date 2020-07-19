@@ -19,6 +19,10 @@ footer {
   margin-bottom: 0px;
 }
 
+label {
+  color: white;
+}
+
 body {
   background: radial-gradient(circle farthest-corner at 1.5% 1.4%, #9fe3ff 0%, #ffb1db 100.2%);
 }

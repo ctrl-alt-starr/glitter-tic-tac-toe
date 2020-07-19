@@ -5,35 +5,99 @@
     <link rel="stylesheet" type="text/css" href="static/firstattempt.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
-        function human(id) {
-            $(function() {
-                $.ajax({
-                    type: 'POST',
-                    url: "/jstoflask",
-                    data: {
-                        1: id
-                    },
+        window.start = "no"
 
-                    success: function(data) {
-                        if (data != 0) {
-                            click1 = 'moon' + id
-                            console.log(click1)
-                            document.getElementById(click1).src = "/static/moon.png"
-                            click2 = 'moon' + data[0]
-                            console.log(click2)
-                            document.getElementById(click2).src = "/static/star.png"
+        function human(id) {
+            if (start == "no") {
+                window.alert("Choose the settings first and start a new game to start playing!");
+                return null
+            }
+            if (opponent == "computer") {
+                console.log("computer")
+                $(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/ai",
+                        data: {
+                            1: id
+                        },
+
+                        success: function(data) {
+
+                            if (data != 0) {
+                                click1 = 'moon' + id
+                                document.getElementById(click1).src = "/static/moon.png"
+                                click2 = 'moon' + data
+                                document.getElementById(click2).src = "/static/star.png"
+
+                            }
+
 
                         }
-                    }
 
 
+                    });
                 });
-            });
 
 
 
 
+            } else {
+                $(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/human",
+                        data: {
+                            1: id
+                        },
+
+                        success: function(data) {
+                            click = 'moon' + id
+
+                            if (data == "player1") {
+                                document.getElementById(click).src = "/static/moon.png"
+                            } else if (data == "player2") {
+                                document.getElementById(click).src = "/static/star.png"
+                            }
+                        }
+
+
+                    });
+                });
+
+
+
+
+            }
         }
+
+
+        $(document).ready(function() {
+            $('form').on('submit', function(event) {
+                $.ajax({
+                        data: {
+                            game: $('#game').val(),
+                            opponent: $('#opponent').val(),
+                            difficulty: $('#difficulty').val()
+
+                        },
+                        type: 'POST',
+                        url: '/setting'
+                    })
+                    .done(function(data) {
+                        window.opponent = data;
+                        window.start = "yes"
+                        var i;
+                        for (i = 1; i < 10; i++) {
+                            click1 = 'moon' + i;
+                            console.log(click1)
+                            document.getElementById(click1).src = "https://i.dlpng.com/static/png/6434036_preview.png"
+
+                        }
+                    });
+                event.preventDefault();
+            });
+        });
     </script>
 
 </head>
@@ -46,7 +110,6 @@
 <button id="help" onclick="help()">HELP</button></a>
 
 <body>
-    <img id="help_script"></img>
     <div>
         <table>
             <tr>
@@ -68,30 +131,36 @@
             </tr>
         </table>
     </div>
-    <form id="grid">
-        <div>
-            <h5>Which game would you like to play?</h5>
-        </div>
-        <div class="select">
-            <select name="slct" id="slct">
-    <option selected disabled>Choose an option</option>
-    <option value="1">Tic Tac Toe</option>
-    <option value="2">Tac Toe Tic</option>
-    <option value="3">Number Tic Tac Toe</option>
-  </select>
-        </div>
-        <div>
-            <h5>How many players are playing?</h5>
-        </div>
-        <div id="player buttons">
-            <button id="player">Single player</button>
-            <button id="player">Double player</button></div>
-        <div>
-            <h5 id="difficlty">Choose the difficulty of the game:</h5>
-        </div>
-        <input class="range-slider__range" type="range" value="100" min="0" max="8">
-        </input>
-        <button type="button" id="new-game" class="btn btn-primary">New game</button>
+    <form class="form-inline" id="grid">
+        <!--First Name-->
 
+        <div class="form-group">
+            <label for="game"><h5>Game</h5></label>
+            <select id="game">
+                    <option value="1">Tic-Tac-Toe</option>
+                    <option value="2" selected>Tac-Toe-Tic</option>
+                    <option value="3">Number Tic-Tac-Toe</option>
+                    
+                </select>
+        </div>
+        <div class="form-group">
+            <label for="opponent"><h5>Opponent</h5></label>
+            <select id="opponent" class="form-control">
+                    <option value="computer">Play against computer</option>
+                    <option value="friend">Play with friend</option>
+                </select>
+        </div>
+        <div class="form-group">
+            <label for="difficulty"><h5>Difficulty</h5></label>
+            <select id="difficulty" class="form-control">
+                <option value="1">Piece of cake</option>
+                <option value="3" selected>Medium</option>
+                <option value="5">Hard</option>
+                <option value="8">Impossible</option>
+            </select>
+        </div>
 
-        <footer> Developed by Varshaa KS and Uma Meenakshi </footer>
+        <button type="submit" class="btn btn-default">New Game</button>
+    </form>
+</body>
+<footer> Developed by Varshaa KS and Uma Meenakshi </footer>
