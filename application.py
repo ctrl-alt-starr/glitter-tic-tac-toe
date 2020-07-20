@@ -35,9 +35,12 @@ def ai():
         return jsonify("Choose the settings first and start a new game to start playing!")
     id=int(request.form["1"])
     position=data[id]
+    isWinner=board.isWinner()
+    if(isWinner):
+        return jsonify(0)
     if(position in board.available_positions_function() and not (board.isWinner())):
        board.update_position(position,'o')
-       bestmove=bestmoves(board.board_function(),board.depth_function())
+       bestmove=bestmoves(board.board_function(),board.depth_function(),game)
        bestmove_id=reversed_data[tuple(bestmove)]
        board.update_position(bestmove,'x')       
        return jsonify(bestmove_id)
@@ -48,9 +51,10 @@ def ai():
 def setting():
   global game,difficulty,opponent,board,start
   game= request.form['game']
+  print(game)
   difficulty= request.form['difficulty']
   opponent= request.form['opponent']
-  board=index.Board(difficulty)
+  board=index.Board(difficulty,game)
   start=1
   return jsonify(opponent)
 @app.route('/human',methods= ['POST'])
