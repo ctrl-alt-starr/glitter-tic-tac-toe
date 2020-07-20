@@ -13,7 +13,6 @@
                 return null
             }
             if (opponent == "computer") {
-                console.log("computer")
                 $(function() {
                     $.ajax({
                         type: 'POST',
@@ -24,11 +23,27 @@
 
                         success: function(data) {
 
-                            if (data != 0) {
+                            if (data[0] != 0) {
                                 click1 = 'moon' + id
                                 document.getElementById(click1).src = "/static/moon.png"
-                                click2 = 'moon' + data
+                                click2 = 'moon' + data[0]
                                 document.getElementById(click2).src = "/static/star.png"
+                                console.log(data)
+                            } else {
+                                console.log(data)
+                                if (data[1] != 0) {
+                                    var i
+                                    document.getElementById('moon' + id).src = "/static/moon.png"
+                                    for (i = 0; i < 3; i++) {
+                                        click1 = 'moon' + data[1][i]
+                                        if (data[2] == "player") {
+                                            document.getElementById(click1).src = "/static/star.png"
+                                        } else {
+                                            document.getElementById(click1).src = "/static/moon.png"
+                                        }
+
+                                    }
+                                }
 
                             }
 
@@ -90,7 +105,6 @@
                         var i;
                         for (i = 1; i < 10; i++) {
                             click1 = 'moon' + i;
-                            console.log(click1)
                             document.getElementById(click1).src = "https://i.dlpng.com/static/png/6434036_preview.png"
 
                         }
@@ -137,8 +151,8 @@
         <div class="form-group">
             <label for="game"><h5>Game</h5></label>
             <select id="game">
-                    <option value="1">Tic-Tac-Toe</option>
-                    <option value="2" selected>Tac-Toe-Tic</option>
+                    <option value="1" selected>Tic-Tac-Toe</option>
+                    <option value="2">Tac-Toe-Tic</option>
                     <option value="3">Number Tic-Tac-Toe</option>
                     
                 </select>
@@ -146,7 +160,7 @@
         <div class="form-group">
             <label for="opponent"><h5>Opponent</h5></label>
             <select id="opponent" class="form-control">
-                    <option value="computer">Play against computer</option>
+                    <option value="computer" selected>Play against computer</option>
                     <option value="friend">Play with friend</option>
                 </select>
         </div>
@@ -154,9 +168,9 @@
             <label for="difficulty"><h5>Difficulty</h5></label>
             <select id="difficulty" class="form-control">
                 <option value="1">Piece of cake</option>
-                <option value="3" selected>Medium</option>
+                <option value="3">Medium</option>
                 <option value="5">Hard</option>
-                <option value="8">Impossible</option>
+                <option value="10" selected>Impossible</option>
             </select>
         </div>
 
