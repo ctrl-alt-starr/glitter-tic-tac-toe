@@ -155,6 +155,10 @@ h6 {
   background: #000000;
 }
 
+p {
+  color: black;
+}
+
 select {
   background: #eeb4e5;
   padding: 5px 0;

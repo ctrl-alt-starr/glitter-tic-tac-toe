@@ -41,17 +41,12 @@ def ai():
        bestmove=bestmoves(board.board_function(),board.depth_function(),game)
        bestmove_id=reversed_data[tuple(bestmove)]
        if(board.isWinner()):
-           print("someoen2")
-           print(board.winner_boxes())
            return jsonify([0,board.winner_boxes(),"opponent"])
        board.update_position(bestmove,'x')  
        if((board.isWinner())):
-           print("someoen2")
-           print(board.winner_boxes())
            return jsonify([0,board.winner_boxes(),"player"])     
        return jsonify([bestmove_id,0])
     else:
-         print("going through position not available")
          return jsonify([0,0])
 @app.route('/setting',methods= ['POST'])
 def setting():
@@ -61,7 +56,7 @@ def setting():
   opponent= request.form['opponent']
   board=index.Board(difficulty,game)
   start=1
-  return jsonify(opponent)
+  return jsonify([game,opponent,difficulty])
 @app.route('/human',methods= ['POST'])
 def human():
     global i
@@ -81,7 +76,9 @@ def human():
             
     else:
         return jsonify(0)
-   
+@app.route('/help')
+def help():  
+    return render_template('rules.html')
 
 
     

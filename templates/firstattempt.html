@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Tic-Tac_Toe</title>
+
     <link rel="stylesheet" type="text/css" href="static/firstattempt.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
@@ -37,12 +37,24 @@
                                     for (i = 0; i < 3; i++) {
                                         click1 = 'moon' + data[1][i]
                                         if (data[2] == "player") {
+                                            console.log("i was here yay")
                                             document.getElementById(click1).src = "/static/star.png"
                                         } else {
                                             document.getElementById(click1).src = "/static/moon.png"
+                                            document.getElementById(click1).style.animation = "slide-fwd-center 2s linear infinite forwards;";
+
                                         }
 
+
                                     }
+                                    var x;
+                                    for (x of data[1]) {
+
+                                        click = 'table' + x
+
+                                        document.getElementById(click).style.background = "#C5B358";
+                                    }
+
                                 }
 
                             }
@@ -100,12 +112,19 @@
                         url: '/setting'
                     })
                     .done(function(data) {
-                        window.opponent = data;
+                        window.opponent = data[1];
                         window.start = "yes"
                         var i;
                         for (i = 1; i < 10; i++) {
                             click1 = 'moon' + i;
+                            click2 = 'table' + i;
                             document.getElementById(click1).src = "https://i.dlpng.com/static/png/6434036_preview.png"
+                            document.getElementById(click2).style.background = "";
+                        }
+                        if (data[0] == '2') {
+                            document.getElementById("title").innerHTML = "Tac-Toe-Tic";
+                        } else if (data[0] == '1') {
+                            document.getElementById("title").innerHTML = "Tic-Tac-Toe";
 
                         }
                     });
@@ -120,28 +139,31 @@
 
 <header>
     <div id="title">Tic-Tac-Toe!</div>
+
 </header>
-<button id="help" onclick="help()">HELP</button></a>
+
+<a href="../help" target="_blank"><button id="help">HELP</button></a>
+
 
 <body>
     <div>
         <table>
             <tr>
 
-                <td id="00 " onclick="human(1)"><img id="moon1" style="width:100px"></td>
-                <td class="vert" id="01 " onclick="human(2)"><img id="moon2" style="width:100px">
+                <td id="table1" onclick="human(1)"><img id="moon1" style="width:100px"></td>
+                <td class="vert" id="table2" onclick="human(2)"><img id="moon2" style="width:100px">
                 </td>
-                <td id="02 " onclick="human(3)"><img id="moon3" style="width:100px"></td>
+                <td id="table3" onclick="human(3)"><img id="moon3" style="width:100px"></td>
             </tr>
             <tr>
-                <td class="hori" id="10" onclick="human(4)"><img id="moon4" style="width:100px"></td>
-                <td class="vert hori" id="11" onclick="human(5)"><img id="moon5" style="width:100px"></td>
-                <td class="hori" id="12" onclick="human(6)"><img id="moon6" style="width:100px"></td>
+                <td class="hori" id="table4" onclick="human(4)"><img id="moon4" style="width:100px"></td>
+                <td class="vert hori" id="table5" onclick="human(5)"><img id="moon5" style="width:100px"></td>
+                <td class="hori" id="table6" onclick="human(6)"><img id="moon6" style="width:100px"></td>
             </tr>
             <tr>
-                <td id="20" onclick="human(7)"><img id="moon7" style="width:100px"></td>
-                <td class="vert" id="21" onclick="human(8)"><img id="moon8" style="width:100px"></td>
-                <td id="22" onclick="human(9)"><img id="moon9" style="width:100px"></td>
+                <td id="table7" onclick="human(7)"><img id="moon7" style="width:100px"></td>
+                <td class="vert" id="table8" onclick="human(8)"><img id="moon8" style="width:100px"></td>
+                <td id="table9" onclick="human(9)"><img id="moon9" style="width:100px"></td>
             </tr>
         </table>
     </div>
