@@ -58,14 +58,17 @@ def bestmoves(board,max_depth,game):
   for i in range(0,3):
     for j in range(0,3):
       if (board[i][j])=='':
-        board[i][j]=player
-        if(game==1):
-          moveval=minimax(board,0, False,max_depth,game)
+        if(max_depth==1):
+          moves[i][j]=0
         else:
-          moveval=minimax(board,0, False,max_depth,game)+neighbors(board)
-        moves[i][j]=moveval
-        board[i][j]=''   
-  print(board)   
+          board[i][j]=player
+          if(game==1):
+             moveval=minimax(board,0, False,max_depth,game,-1000,1000)
+          else:
+             moveval=minimax(board,0, False,max_depth,game,-1000,1000)+neighbors(board)
+          moves[i][j]=moveval
+          board[i][j]=''   
+          print([i,j,moveval])
   return random_move(moves)
 
 def random_move(moves):
@@ -75,31 +78,30 @@ def random_move(moves):
     for j in range(0,3):
        if moves[i][j]==max_value:
           max_moves.append([i,j])
-  choice=random.choice(max_moves)
-  print(moves)
-  print(choice)
-  print("____________")
-  return (choice)
+  return random.choice(max_moves)
   
 
-def minimax(board,depth,ismax,max_depth,game):                                                         
+def minimax(board,depth,ismax,max_depth,game,alpha,beta):                                                         
   score=eval(board,game)
-  if movesover(board) : 
-    return 0
   if score==10 : 
     return score-depth
   if score == -10 :
     return score+depth
   if depth==max_depth:
     return score
+  if movesover(board) : 
+    return 0
   if (ismax):
    best=-1000
    for i in range(0,3):
     for j in range(0,3):
       if (board[i][j])=='':
         board[i][j]=player
-        best=max(best,minimax(board,depth+1,not (ismax),max_depth,game)) 
+        best=max(best,minimax(board,depth+1,not (ismax),max_depth,game,alpha,beta)) 
+        alpha = max(alpha, best) 
         board[i][j]=''
+        if beta <= alpha:  
+          break 
    return best
   else:
    best=1000
@@ -107,8 +109,11 @@ def minimax(board,depth,ismax,max_depth,game):
     for j in range(0,3):
       if (board[i][j])=='':
         board[i][j]=opponent
-        best=min(best,minimax(board,depth+1,not (ismax),max_depth,game))      
+        best=min(best,minimax(board,depth+1,not (ismax),max_depth,game,alpha,beta))   
+        beta = min(beta, best)     
         board[i][j]=''
+        if beta <= alpha:  
+          break 
    return best
 
 
