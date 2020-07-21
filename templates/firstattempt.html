@@ -26,11 +26,12 @@
                             if (data[0] != 0) {
                                 click1 = 'moon' + id
                                 document.getElementById(click1).src = "/static/moon.png"
-                                click2 = 'moon' + data[0]
-                                document.getElementById(click2).src = "/static/star.png"
-                                console.log(data)
+                                if(data[0]!="None"){click2 = 'moon' + data[0]
+                                document.getElementById(click2).src = "/static/star.png"}
+                                
+                                
                             } else {
-                                console.log(data)
+                                
                                 if (data[1] != 0) {
                                     var i
                                     document.getElementById('moon' + id).src = "/static/moon.png"

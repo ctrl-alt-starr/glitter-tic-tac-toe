@@ -68,8 +68,9 @@ def bestmoves(board,max_depth,game):
              moveval=minimax(board,0, False,max_depth,game,-1000,1000)+neighbors(board)
           moves[i][j]=moveval
           board[i][j]=''   
-          print([i,j,moveval])
-  return random_move(moves)
+  choice=random_move(moves)
+  print(choice)
+  return choice
 
 def random_move(moves):
   max_value=max(np.concatenate(moves))
@@ -78,6 +79,7 @@ def random_move(moves):
     for j in range(0,3):
        if moves[i][j]==max_value:
           max_moves.append([i,j])
+  print([max_value,max_moves])
   return random.choice(max_moves)
   
 

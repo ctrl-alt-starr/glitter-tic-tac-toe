@@ -25,11 +25,10 @@ class Board:
            self.available_positions.remove(position)
         self.winner_function()
     def winner_function(self):
-        self.winner= eval(self.board,self.game)    
+        self.winner= eval(self.board,self.game)  
         return self.winner
     def isWinner(self):
         if self.winner==10 or self.winner==-10:
-            print("winner")
             return True
         else:
             return False

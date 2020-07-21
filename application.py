@@ -34,7 +34,6 @@ def ai():
     position=data[id]
     isWinner=board.isWinner()
     if(isWinner):
-        print("going through already winner")
         return jsonify([0,0])
     if(position in board.available_positions_function() and not (board.isWinner())):
        board.update_position(position,'o')
@@ -42,10 +41,12 @@ def ai():
        bestmove_id=reversed_data[tuple(bestmove)]
        if(board.isWinner()):
            return jsonify([0,board.winner_boxes(),"opponent"])
-       board.update_position(bestmove,'x')  
-       if((board.isWinner())):
-           return jsonify([0,board.winner_boxes(),"player"])     
-       return jsonify([bestmove_id,0])
+       if(board.available_positions!=[]):
+          board.update_position(bestmove,'x') 
+          if((board.isWinner())):
+             return jsonify([0,board.winner_boxes(),"player"])     
+          return jsonify([bestmove_id,0])
+       else: return jsonify(["None",0])
     else:
          return jsonify([0,0])
 @app.route('/setting',methods= ['POST'])
