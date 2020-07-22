@@ -11,6 +11,7 @@ function human(id) {
 
             success: function(data) {
                 console.log('success', data);
+                document.get
             }
         });
     });

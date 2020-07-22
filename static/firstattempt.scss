@@ -5,7 +5,7 @@
             word-spacing: 6px;
             color: #191970;
             font-weight: 900;
-            margin-left: 350px;
+            margin-left: 30px;
         }
         
         footer {
@@ -181,4 +181,24 @@
                 color: white;
                 background: black;
             }
+        }
+        
+        .btnmoon {
+            display: inline-block;
+            vertical-align: top;
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
+            background-image: url("https://www.clipartkey.com/mpngs/m/4-45815_half-moon-clipart-outhouse-moon-clip-art.png");
+            background-size: cover;
+        }
+        
+        .btnstar {
+            display: inline-block;
+            vertical-align: top;
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
+            background-image: url("https://www.clipartmax.com/png/middle/4-43266_black-star-clip-art-small-black-star-png.png");
+            background-size: cover;
         }

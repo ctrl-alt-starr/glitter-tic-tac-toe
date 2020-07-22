@@ -25,8 +25,12 @@
                             2: symbol
 
                         },
+                        beforeSend: function() {
+                            document.getElementsByTagName("td")[0].style.cursor = "wait";
+                        },
 
                         success: function(data) {
+                            document.getElementsByTagName("td")[0].style.cursor = "pointer";
                             console.log(data)
                             if (data[0] != 0) {
                                 if (game != 3) {
@@ -45,15 +49,28 @@
                                     } else {
                                         document.getElementById(click1).src = moon
                                     }
+                                    click2 = 'symbolmoon' + id
+                                    click3 = 'symbolstar' + id
+                                    document.getElementById(click2).disabled = true;
+                                    document.getElementById(click3).disabled = true;
+                                    document.getElementById(click2).style.visibility = "hidden";
+                                    document.getElementById(click3).style.visibility = "hidden";
                                     if (data[0] != "None") {
-                                        click2 = 'moon' + data[0]
+                                        click4 = 'moon' + data[0]
                                         console.log(click2)
                                         if (data[3][0] == "x") {
-                                            document.getElementById(click2).src = star
+                                            document.getElementById(click4).src = star
                                         } else {
-                                            document.getElementById(click2).src = moon
+                                            document.getElementById(click4).src = moon
                                         }
+                                        click5 = 'symbolmoon' + data[0]
+                                        click6 = 'symbolstar' + data[0]
+                                        document.getElementById(click5).disabled = true;
+                                        document.getElementById(click6).disabled = true;
+                                        document.getElementById(click5).style.visibility = "hidden";
+                                        document.getElementById(click6).style.visibility = "hidden";
                                     }
+
                                 }
 
 
@@ -288,7 +305,7 @@
 
 <body>
     <div>
-        <table>
+        <table id="table">
             <tr>
 
                 <td id="table1" onclick="human(1,'0')">
