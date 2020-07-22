@@ -1,4 +1,5 @@
-from minimax import eval
+import minimax
+import last_turn_tic_tac_toe
 global data 
 data= {
                 1:[0,0],
@@ -25,7 +26,10 @@ class Board:
            self.available_positions.remove(position)
         self.winner_function()
     def winner_function(self):
-        self.winner= eval(self.board,self.game)  
+        if(self.game==1 or self.game ==2):
+           self.winner= minimax.eval(self.board,self.game)  
+       # else:
+        #   self.winner= last_turn_tic_tac_toe.eval(self.board,self.game)  
         return self.winner
     def isWinner(self):
         if self.winner==10 or self.winner==-10:

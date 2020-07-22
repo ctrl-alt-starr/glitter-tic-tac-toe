@@ -67,13 +67,15 @@ def human():
          if(i%2==0):
              board.update_position(position,'x')
              i+=1
-             return jsonify("player1")
+             if(board.isWinner()):return jsonify(["player1",board.winner_boxes()])
+             else: return jsonify(["player1",0])     
              
        
          else:
              board.update_position(position,'o')
              i+=1
-             return jsonify("player2")
+             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player2"])
+             else: return jsonify(["player2",0])
             
     else:
         return jsonify(0)

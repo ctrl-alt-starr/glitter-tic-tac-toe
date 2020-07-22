@@ -26,24 +26,23 @@
                             if (data[0] != 0) {
                                 click1 = 'moon' + id
                                 document.getElementById(click1).src = "/static/moon.png"
-                                if(data[0]!="None"){click2 = 'moon' + data[0]
-                                document.getElementById(click2).src = "/static/star.png"}
-                                
-                                
+                                if (data[0] != "None") {
+                                    click2 = 'moon' + data[0]
+                                    document.getElementById(click2).src = "/static/star.png"
+                                }
+
+
                             } else {
-                                
+
                                 if (data[1] != 0) {
                                     var i
                                     document.getElementById('moon' + id).src = "/static/moon.png"
                                     for (i = 0; i < 3; i++) {
                                         click1 = 'moon' + data[1][i]
                                         if (data[2] == "player") {
-                                            console.log("i was here yay")
                                             document.getElementById(click1).src = "/static/star.png"
                                         } else {
                                             document.getElementById(click1).src = "/static/moon.png"
-                                            document.getElementById(click1).style.animation = "slide-fwd-center 2s linear infinite forwards;";
-
                                         }
 
 
@@ -56,7 +55,21 @@
                                         document.getElementById(click).style.background = "#C5B358";
                                     }
                                     sound = document.createElement("audio");
-                                    sound.src = "static/audio_file.mp3";
+                                    win = "static/audio_file.mp3"
+                                    lose = "static/lost.mp3"
+                                    if (game == 1) {
+                                        if (data[2] == "player") {
+                                            sound.src = lose
+                                        } else {
+                                            sound.src = win
+                                        }
+                                    } else {
+                                        if (data[2] == "player") {
+                                            sound.src = win
+                                        } else {
+                                            sound.src = lose
+                                        }
+                                    }
                                     sound.volume = 0.1;
                                     sound.play();
 
@@ -85,12 +98,27 @@
 
                         success: function(data) {
                             click = 'moon' + id
-
-                            if (data == "player1") {
+                            if (data[0] == "player1") {
                                 document.getElementById(click).src = "/static/moon.png"
-                            } else if (data == "player2") {
+                            } else if (data[0] == "player2") {
                                 document.getElementById(click).src = "/static/star.png"
                             }
+                            if (data[1] != 0) {
+                                var x;
+                                for (x of data[1]) {
+
+                                    click = 'table' + x
+
+                                    document.getElementById(click).style.background = "#C5B358";
+                                }
+                                sound = document.createElement("audio");
+                                sound.src = "static/audio_file.mp3"
+                                sound.volume = 0.1;
+                                sound.play();
+
+                            }
+
+
                         }
 
 
@@ -119,6 +147,7 @@
                     .done(function(data) {
                         window.opponent = data[1];
                         window.start = "yes"
+                        window.game = data[0];
                         var i;
                         for (i = 1; i < 10; i++) {
                             click1 = 'moon' + i;
@@ -139,6 +168,22 @@
 
         function refreshPage() {
             window.location.reload();
+        }
+
+        function refreshPage2(data) {
+            if (data.value == 'friend') {
+                document.getElementById("difficulty").style.visibility = "hidden";
+                document.getElementById("difficultyid").style.visibility = "hidden";
+            } else {
+                document.getElementById("difficulty").style.visibility = "visible";
+                document.getElementById("difficultyid").style.visibility = "visible";
+            }
+
+
+        }
+
+        function difficulty() {
+            document.getElementById("difficulty").visibility = hidden;
         }
     </script>
 
@@ -185,19 +230,19 @@
             <select id="game">
                     <option value="1" selected>Tic-Tac-Toe</option>
                     <option value="2">Tac-Toe-Tic</option>
-                    <option value="3">Number Tic-Tac-Toe</option>
+                    <option value="3">Last turn Tic-Tac-Toe</option>
                     
                 </select>
         </div>
         <div class="form-group">
             <label for="opponent"><h5>Opponent</h5></label>
-            <select id="opponent" class="form-control">
+            <select id="opponent" class="form-control" onchange="refreshPage2(this)">
                     <option value="computer" selected>Play against computer</option>
                     <option value="friend">Play with friend</option>
                 </select>
         </div>
         <div class="form-group">
-            <label for="difficulty"><h5>Difficulty</h5></label>
+            <label id="difficultyid" for="difficulty"><h5>Difficulty</h5></label>
             <select id="difficulty" class="form-control">
                 <option value="1">Piece of cake</option>
                 <option value="3">Medium</option>
@@ -209,4 +254,5 @@
         <button id="submit" type="submit" class="btn btn-default">New Game</button>
     </form>
 </body>
+
 <footer> Developed by Varshaa KS and Uma Meenakshi </footer>
