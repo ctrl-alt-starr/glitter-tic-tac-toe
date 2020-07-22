@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from tac import neighbors
-import numpy as np
 import random
 
 player='x'
