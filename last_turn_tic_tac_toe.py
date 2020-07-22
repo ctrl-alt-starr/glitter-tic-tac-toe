@@ -29,7 +29,8 @@ def eval(board,turn):
    return 0
 def bestmoves(board,max_depth):
   bestval=-1000
-  bestmove=[-1,-1]
+  bestmove='x'
+  bestmoveposition=[-1,-1]
   for i in range(0,3):
     for j in range(0,3):
       for move in['x','o']:

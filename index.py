@@ -20,16 +20,16 @@ class Board:
         self.maxDepth=maxDepth
         self.winner= None
         self.game=game
-    def update_position(self,position,player_symbol):
+    def update_position(self,position,player_symbol,turn):
         self.board[position[0]][position[1]]=player_symbol
         if(self.available_positions!=[]):
            self.available_positions.remove(position)
-        self.winner_function()
-    def winner_function(self):
+        self.winner_function(turn)
+    def winner_function(self,turn):
         if(self.game==1 or self.game ==2):
            self.winner= minimax.eval(self.board,self.game)  
-       # else:
-        #   self.winner= last_turn_tic_tac_toe.eval(self.board,self.game)  
+        else:
+          self.winner= last_turn_tic_tac_toe.eval(self.board,turn)  
         return self.winner
     def isWinner(self):
         if self.winner==10 or self.winner==-10:

@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 import json
 from minimax import bestmoves,eval
+from gameredirection import game_redirection
 import index
 global data 
 data= {
@@ -31,30 +32,47 @@ def ai():
     if(start!=1):
         return jsonify("Choose the settings first and start a new game to start playing!")
     id=int(request.form["1"])
+    symbol=(request.form["2"])
+    print("_______")
+    print([id,type(id)])
+    print([symbol,type(symbol)])
+    print("________")
     position=data[id]
+    print(position)
     isWinner=board.isWinner()
     if(isWinner):
         return jsonify([0,0])
     if(position in board.available_positions_function() and not (board.isWinner())):
-       board.update_position(position,'o')
-       bestmove=bestmoves(board.board_function(),board.depth_function(),game)
-       bestmove_id=reversed_data[tuple(bestmove)]
+       if(game==3):
+           opponent_symbol=symbol
+       else:
+           opponent_symbol='o'
+       board.update_position(position,opponent_symbol,"opponent")
+       bestmove=game_redirection(board.board_function(),board.depth_function(),game)
+       bestmove_id=reversed_data[tuple(bestmove[0])]
        if(board.isWinner()):
-           return jsonify([0,board.winner_boxes(),"opponent"])
+           return jsonify([0,board.winner_boxes(),"opponent",['None',opponent_symbol,"None"]])
        if(board.available_positions!=[]):
-          board.update_position(bestmove,'x') 
+          if(game==3):
+             player_symbol=bestmove[1]
+          else:
+             player_symbol='x'
+          board.update_position(bestmove[0],player_symbol,"player") 
           if((board.isWinner())):
-             return jsonify([0,board.winner_boxes(),"player"])     
-          return jsonify([bestmove_id,0])
+             print("went through this")
+             return jsonify([0,board.winner_boxes(),"player",[player_symbol,opponent_symbol,bestmove_id]])     
+          return jsonify([bestmove_id,0,0,[player_symbol,opponent_symbol]])
        else: return jsonify(["None",0])
     else:
          return jsonify([0,0])
 @app.route('/setting',methods= ['POST'])
 def setting():
+  print("HII")
   global game,difficulty,opponent,board,start
   game= int(request.form['game'])
   difficulty= int (request.form['difficulty'])
   opponent= request.form['opponent']
+  print([game,difficulty,opponent])
   board=index.Board(difficulty,game)
   start=1
   return jsonify([game,opponent,difficulty])

@@ -6,8 +6,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
         window.start = "no"
+        window.moon = "/static/moon.png"
+        window.star = "/static/star.png"
 
-        function human(id) {
+        function human(id, symbol) {
+            console.log(symbol)
             if (start == "no") {
                 window.alert("Choose the settings first and start a new game to start playing!");
                 return null
@@ -18,46 +21,79 @@
                         type: 'POST',
                         url: "/ai",
                         data: {
-                            1: id
+                            1: id,
+                            2: symbol
+
                         },
 
                         success: function(data) {
-
+                            console.log(data)
                             if (data[0] != 0) {
-                                click1 = 'moon' + id
-                                document.getElementById(click1).src = "/static/moon.png"
-                                if (data[0] != "None") {
-                                    click2 = 'moon' + data[0]
-                                    document.getElementById(click2).src = "/static/star.png"
+                                if (game != 3) {
+                                    click1 = 'moon' + id
+                                    document.getElementById(click1).src = "/static/moon.png"
+                                    if (data[0] != "None") {
+                                        click2 = 'moon' + data[0]
+                                        document.getElementById(click2).src = "/static/star.png"
+                                    }
+                                } else {
+
+                                    click1 = 'moon' + id
+                                    if (data[3][1] == "x") {
+                                        console.log(data[3][1])
+                                        document.getElementById(click1).src = star
+                                    } else {
+                                        document.getElementById(click1).src = moon
+                                    }
+                                    if (data[0] != "None") {
+                                        click2 = 'moon' + data[0]
+                                        console.log(click2)
+                                        if (data[3][0] == "x") {
+                                            document.getElementById(click2).src = star
+                                        } else {
+                                            document.getElementById(click2).src = moon
+                                        }
+                                    }
                                 }
+
 
 
                             } else {
 
                                 if (data[1] != 0) {
-                                    var i
-                                    document.getElementById('moon' + id).src = "/static/moon.png"
-                                    for (i = 0; i < 3; i++) {
-                                        click1 = 'moon' + data[1][i]
-                                        if (data[2] == "player") {
-                                            document.getElementById(click1).src = "/static/star.png"
-                                        } else {
-                                            document.getElementById(click1).src = "/static/moon.png"
-                                        }
 
-
-                                    }
                                     var x;
                                     for (x of data[1]) {
 
                                         click = 'table' + x
-
+                                        click1 = 'moon' + x
                                         document.getElementById(click).style.background = "#C5B358";
+                                        if (data[2] == 'player') {
+                                            document.getElementById(click1).src = star;
+                                        } else {
+                                            document.getElementById(click1).src = moon;
+                                        }
+
+                                    }
+                                    if (game == 3) {
+                                        click1 = 'moon' + id
+                                        click2 = 'moon' + data[3][2]
+                                        if (data[3][1] == "x") {
+                                            document.getElementById(click1).src = star
+                                        } else {
+                                            document.getElementById(click1).src = moon
+                                        }
+                                        if (data[3][1] == "x") {
+                                            document.getElementById(click2).src = star
+                                        } else if (data[3][1] == "o") {
+                                            document.getElementById(click2).src = moon
+                                        }
+
                                     }
                                     sound = document.createElement("audio");
                                     win = "static/audio_file.mp3"
                                     lose = "static/lost.mp3"
-                                    if (game == 1) {
+                                    if (game == 1 || game == 3) {
                                         if (data[2] == "player") {
                                             sound.src = lose
                                         } else {
@@ -134,6 +170,7 @@
 
         $(document).ready(function() {
             $('form').on('submit', function(event) {
+                console.log("sending data")
                 $.ajax({
                         data: {
                             game: $('#game').val(),
@@ -145,6 +182,8 @@
                         url: '/setting'
                     })
                     .done(function(data) {
+                        console.log("got data back")
+
                         window.opponent = data[1];
                         window.start = "yes"
                         window.game = data[0];
@@ -152,15 +191,19 @@
                         for (i = 1; i < 10; i++) {
                             click1 = 'moon' + i;
                             click2 = 'table' + i;
-                            document.getElementById(click1).src = "https://i.dlpng.com/static/png/6434036_preview.png"
+                            document.getElementById(click1).src = ""
                             document.getElementById(click2).style.background = "";
                         }
                         if (data[0] == '2') {
                             document.getElementById("title").innerHTML = "Tac-Toe-Tic";
                         } else if (data[0] == '1') {
                             document.getElementById("title").innerHTML = "Tic-Tac-Toe";
-
+                        } else {
+                            document.getElementById("title").innerHTML = "Last turn Tic-Tac-Toe";
                         }
+                        gamesettings(game);
+
+
                     });
                 event.preventDefault();
             });
@@ -182,9 +225,51 @@
 
         }
 
-        function difficulty() {
-            document.getElementById("difficulty").visibility = hidden;
+        function gamesettings(game) {
+            if (game == 3) {
+                console.log("yay")
+                for (i = 1; i < 10; i++) {
+                    click1 = 'table' + i;
+                    click2 = 'symbolmoon' + i
+                    click3 = 'symbolstar' + i
+                    console.log(i)
+                    console.log(click2)
+                    document.getElementById(click1).disabled = true;;
+                    document.getElementById(click2).disabled = false;
+                    document.getElementById(click3).disabled = false;
+                    document.getElementById(click2).style.visibility = "visible";
+                    document.getElementById(click3).style.visibility = "visible";
+                }
+            } else {
+                console.log("yay2")
+                for (i = 1; i < 10; i++) {
+                    click1 = 'table' + i;
+                    click2 = 'symbolmoon' + i
+                    click3 = 'symbolstar' + i
+                    console.log(i)
+                    console.log(click2)
+                    document.getElementById(click1).disabled = false;
+                    document.getElementById(click2).disabled = true;
+                    document.getElementById(click3).disabled = true;
+                    document.getElementById(click2).style.visibility = "hidden";
+                    document.getElementById(click3).style.visibility = "hidden";
+                }
+            }
         }
+        $(document).ready(function() {
+            for (i = 1; i < 10; i++) {
+                click1 = 'table' + i;
+                click2 = 'symbolmoon' + i
+                click3 = 'symbolstar' + i
+                console.log(i)
+                console.log(click2)
+                document.getElementById(click1).disabled = false;
+                document.getElementById(click2).disabled = true;
+                document.getElementById(click3).disabled = true;
+                document.getElementById(click2).style.visibility = "hidden";
+                document.getElementById(click3).style.visibility = "hidden";
+            }
+        });
     </script>
 
 </head>
@@ -200,25 +285,48 @@
 <button id="help" type="submit" onClick="refreshPage()">Reset</button>
 
 
+
 <body>
     <div>
         <table>
             <tr>
 
-                <td id="table1" onclick="human(1)"><img id="moon1" style="width:100px"></td>
-                <td class="vert" id="table2" onclick="human(2)"><img id="moon2" style="width:100px">
+                <td id="table1" onclick="human(1,'0')">
+                    <button type="button" class="btnmoon" id="symbolmoon1" onclick="human(1,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar1" onclick="human(1,'x')"></button>
+                    <img id="moon1" style="width:100px "></td>
+                <td class="vert" id="table2" onclick="human(2,0) ">
+                    <button type="button" class="btnmoon" id="symbolmoon2" onclick="human(2,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar2" onclick="human(2,'x')"></button>
+                    <img id="moon2" style="width:100px ">
                 </td>
-                <td id="table3" onclick="human(3)"><img id="moon3" style="width:100px"></td>
+                <td id="table3" onclick="human(3,0) ">
+                    <button type="button" class="btnmoon" id="symbolmoon3" onclick="human(3,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar3" onclick="human(3,'x')"></button>
+                    <img id="moon3" style="width:100px "></td>
             </tr>
             <tr>
-                <td class="hori" id="table4" onclick="human(4)"><img id="moon4" style="width:100px"></td>
-                <td class="vert hori" id="table5" onclick="human(5)"><img id="moon5" style="width:100px"></td>
-                <td class="hori" id="table6" onclick="human(6)"><img id="moon6" style="width:100px"></td>
+                <td class="hori" id="table4" onclick="human(4,0)">
+                    <button type="button" class="btnmoon" id="symbolmoon4" onclick="human(4,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar4" onclick="human(4,'x')" onclick="human(1,star)"></button>
+                    <img id="moon4" style="width:100px "></td>
+                <td class="vert hori" id="table5" onclick="human(5,0) ">
+                    <button type="button" class="btnmoon" id="symbolmoon5" onclick="human(5,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar5" onclick="human(5,'x')"></button><img id="moon5" style="width:100px "></td>
+                <td class="hori" id="table6" onclick="human(6,0) ">
+                    <button type="button" class="btnmoon" id="symbolmoon6" onclick="human(6,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar6" onclick="human(6,'x')"></button><img id="moon6" style="width:100px "></td>
             </tr>
             <tr>
-                <td id="table7" onclick="human(7)"><img id="moon7" style="width:100px"></td>
-                <td class="vert" id="table8" onclick="human(8)"><img id="moon8" style="width:100px"></td>
-                <td id="table9" onclick="human(9)"><img id="moon9" style="width:100px"></td>
+                <td id="table7" onclick="human(7,0) ">
+                    <button type="button" class="btnmoon" id="symbolmoon7" onclick="human(7,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar7" onclick="human(7,'x')"></button><img id="moon7" style="width:100px "></td>
+                <td class="vert" id="table8" onclick="human(8,0) ">
+                    <button type="button " class="btnmoon" id="symbolmoon8" onclick="human(8,'o')"></button>
+                    <button type="button " class="btnstar" id="symbolstar8" onclick="human(8,'x')"></button><img id="moon8" style="width:100px "></td>
+                <td id="table9" onclick="human(9,0) ">
+                    <button type="button" class="btnmoon" id="symbolmoon9" onclick="human(9,'o')"></button>
+                    <button type="button" class="btnstar" id="symbolstar9" onclick="human(9,'x')"></button><img id="moon9" style="width:100px "></td>
             </tr>
         </table>
     </div>
