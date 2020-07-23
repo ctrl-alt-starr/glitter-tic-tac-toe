@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 
 <head>
-
+    <title>Glitter Tic-Tac</title>
+    <link rel="icon" type="image/png" href="/static/favicon2.png"/>
     <link rel="stylesheet" type="text/css" href="static/firstattempt.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
         window.start = "no"
         window.moon = "/static/moon.png"
         window.star = "/static/star.png"
+        window.firstturn=true
+        window.iterative=0
 
         function human(id, symbol) {
+            if(iterative==0&&game==3 && id==5){
+                window.alert("In Last turn tic-tac-toe,the first move cannot be in the centre square!")
+                return null;
+            }          
+            iterative=1
             if (start == "no") {
                 window.alert("Choose the settings first and start a new game to start playing!");
                 return null
@@ -32,12 +40,11 @@
 
                         },
 
-                        success: function(data) {
+                        success: function(data) {                           
                             document.documentElement.style.cursor = 'pointer';
                             for (i = 0; i < 9; i++) {
                                 document.getElementsByTagName("td")[i].style.cursor = "pointer";
                             }
-                            console.log(data)
                             if(data[0]=='None'&&data[1]==0&&data[2]==0){tie(0,0,0)}
                             if (data[0] != 0) {
                                 if (game != 3) {
@@ -249,6 +256,10 @@
                         window.opponent = data[1];
                         window.start = "yes"
                         window.game = data[0];
+                        if(game==3){
+                            window.gamehasbeenplayedbefore= true
+                        }
+                        iterative=0
                         if(opponent=="friend"&&game!=3){
                             document.getElementById("winner").innerHTML="First player gets moon and second player gets stars!"
                         }
@@ -310,7 +321,7 @@
                 }
             } else {
 
-                disablebuttons(true,0)
+                disablebuttons(false,0)
             }
         }
         $(document).ready(function() {
@@ -325,7 +336,9 @@
                 var click1 = 'table' + i;
                 var click2 = 'symbolmoon' + i
                 var click3 = 'symbolstar' + i
-                if(!start&&id==0){document.getElementById(click1).onclick= clickarray[i-1]}
+                if(!start&&id==0&&gamehasbeenplayedbefore){
+                    console.log("click")
+                    document.getElementById(click1).onclick= clickarray[i-1]}
                 document.getElementById(click2).disabled = true;
                 document.getElementById(click3).disabled = true;
                 document.getElementById(click2).style.visibility = "hidden";

@@ -48,6 +48,7 @@ def ai():
            return jsonify([0,0,position])
        else: bestmove_id=reversed_data[tuple(bestmove[0])]
        if(board.isWinner()):
+           print(board.winner_boxes())
            return jsonify([0,board.winner_boxes(),"opponent",['None',opponent_symbol,"None"]])
        if(board.available_positions!=[]):
           if(game==3):
@@ -56,6 +57,7 @@ def ai():
              player_symbol='x'
           board.update_position(bestmove[0],player_symbol,"player") 
           if((board.isWinner())):    
+             print(board.winner_boxes())
              return jsonify([0,board.winner_boxes(),"player",[player_symbol,opponent_symbol,bestmove_id]])     
           return jsonify([bestmove_id,0,0,[player_symbol,opponent_symbol]])
        else: return jsonify(["None",0,0])
@@ -102,7 +104,7 @@ def help():
 
 
     
-    
+ 
 
 if __name__=="__main__":
    app.run(debug=True)
