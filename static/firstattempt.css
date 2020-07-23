@@ -213,6 +213,9 @@ h2 {
     letter-spacing: 5px;
     word-spacing: 6px;
 }
+#submit{
+    float: none;
+}
 
 
 /*# sourceMappingURL=firstattempt.css.map */

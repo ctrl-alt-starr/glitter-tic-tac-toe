@@ -38,6 +38,8 @@ def bestmoves(board,max_depth,available_positions):
       return [random.choice(available_positions),'o']
     else:
       return [random.choice(available_positions),'x']
+  if(max_depth==1):
+    return [random.choice(available_positions),random.choice(['x','o'])]
   bestval=-1000
   bestmove='x'
   bestmoveposition=[-1,-1]

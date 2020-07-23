@@ -33,6 +33,7 @@
                         },
 
                         success: function(data) {
+                            console.log(data)
                             document.documentElement.style.cursor = 'pointer';
                             for (i = 0; i < 9; i++) {
                                 document.getElementsByTagName("td")[i].style.cursor = "pointer";
@@ -142,6 +143,25 @@
                                     sound.play();
 
                                 }
+                                if(data[0]==0 && data[1]==0){
+                                    if(data[2]!=0){
+                                        click='moon'+id
+                                        if(game!=3){
+                                            document.getElementById(click).src = moon
+                                        }
+                                        else{
+                                            click2 = 'symbolmoon' + id
+                                            click3 = 'symbolstar' + id
+                                            document.getElementById(click2).disabled = true;
+                                            document.getElementById(click3).disabled = true;
+                                            document.getElementById(click2).style.visibility = "hidden";
+                                            document.getElementById(click3).style.visibility = "hidden";
+                                            if(symbol=='x'){document.getElementById(click).src = star
+                                            }
+                                            else{document.getElementById(click).src = moon}
+                                        }
+                                    }
+                                }
 
                             }
 
@@ -191,6 +211,12 @@
                                 }
                             }
                             if (data[1] != 0) {
+                                click = 'moon' + id
+                                if (data[2] == "player1") {
+                                        document.getElementById(click).src = moon;
+                            }   else if (data[2] == "player2") {
+                                        document.getElementById(click).src = star;
+                                }
                                 var x;
                                 for (x of data[1]) {
                                     click = 'table' + x
@@ -278,11 +304,12 @@
 
         function gamesettings(game) {
             if (game == 3) {
-
+                window.clickarray=[]
                 for (i = 1; i < 10; i++) {
                     click1 = 'table' + i;
                     click2 = 'symbolmoon' + i
-                    click3 = 'symbolstar' + i
+                    click3 = 'symbolstar' + i 
+                    clickarray.push(document.getElementById(click1).onclick)                   
                     document.getElementById(click1).onclick = null;
                     document.getElementById(click2).disabled = false;
                     document.getElementById(click3).disabled = false;
@@ -295,7 +322,7 @@
                     click1 = 'table' + i;
                     click2 = 'symbolmoon' + i
                     click3 = 'symbolstar' + i
-                    document.getElementById(click1).disabled = false;
+                    document.getElementById(click1).onclick= clickarray[i-1]
                     document.getElementById(click2).disabled = true;
                     document.getElementById(click3).disabled = true;
                     document.getElementById(click2).style.visibility = "hidden";

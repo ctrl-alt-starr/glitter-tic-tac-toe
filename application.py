@@ -44,7 +44,9 @@ def ai():
            opponent_symbol='o'
        board.update_position(position,opponent_symbol,"opponent")
        bestmove=game_redirection(board.board_function(),board.depth_function(),board.available_positions_function(),game)
-       bestmove_id=reversed_data[tuple(bestmove[0])]
+       if(bestmove[0]==[-1,-1]):
+           return jsonify([0,0,position])
+       else: bestmove_id=reversed_data[tuple(bestmove[0])]
        if(board.isWinner()):
            return jsonify([0,board.winner_boxes(),"opponent",['None',opponent_symbol,"None"]])
        if(board.available_positions!=[]):
@@ -82,7 +84,7 @@ def human():
              if(game!=3):board.update_position(position,'x',"player")
              else: board.update_position(position,symbol,"player")
              i+=1
-             if(board.isWinner()):return jsonify(["player1",board.winner_boxes()])
+             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player1"])
              else: return jsonify(["player1",0])     
              
        
