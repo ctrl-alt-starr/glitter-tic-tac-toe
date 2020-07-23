@@ -11,6 +11,7 @@
         window.star = "/static/star.png"
         window.firstturn=true
         window.iterative=0
+        window.gamehasbeenplayedbefore=false
 
         function human(id, symbol) {
             if(iterative==0&&game==3 && id==5){
@@ -124,15 +125,19 @@
                                     lose = "static/lost.mp3"
                                     if (game == 1 || game == 3) {
                                         if (data[2] == "player") {
+                                            document.getElementById("winner").innerHTML="This is you right now <br> (ಥ ͜ʖಥ) <br>, isn't? Sucks to lose lol"
                                             sound.src = lose
                                         } else {
                                             sound.src = win
+                                            document.getElementById("winner").innerHTML="This is me <br> ᕕ༼✪ل͜✪༽ᕗ So proud of your win kiddo"
                                         }
                                     } else {
                                         if (data[2] == "player") {
                                             sound.src = win
+                                            document.getElementById("winner").innerHTML="Ah the taste of victory <br>(◕‿◕✿)"
                                         } else {
                                             sound.src = lose
+                                            document.getElementById("winner").innerHTML="Me: You Lose <br> You: ( ⚈̥̥̥̥̥́⌢⚈̥̥̥̥̥̀) "
                                         }
                                     }
                                     sound.volume = 0.1;
@@ -252,12 +257,12 @@
                     })
                     .done(function(data) {
 
-
+                        document.getElementById("winner").innerHTML="Tic Tac Toe with extra glitter <br>    ( ͡~ ͜ʖ ͡°)"
                         window.opponent = data[1];
                         window.start = "yes"
                         window.game = data[0];
                         if(game==3){
-                            window.gamehasbeenplayedbefore= true
+                            gamehasbeenplayedbefore= true;
                         }
                         iterative=0
                         if(opponent=="friend"&&game!=3){
@@ -367,7 +372,7 @@
             }                            
             
             
-            document.getElementById("winner").innerHTML="Aww shucks it's a tie"
+            document.getElementById("winner").innerHTML="Aww shucks it's a tie <br> ¯\_| ✖ 〜 ✖ |_/¯"
             sound = document.createElement("audio");                                    
             sound.src = "static/lost.mp3"
             sound.volume = 0.1;
