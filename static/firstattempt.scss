@@ -15,13 +15,13 @@
     @include basics();
     background:#eeb4e5;
     padding: 5px 0;
-    border: 1px solid black;
+    border: 3px solid #bc4dc6;
     color: black;        
     font-size: 10px;
     margin-left: 10px;
     &:hover {
-        background: #ffffff;
-        color: #000000;
+        border: 3px solid #bc4dc6;
+        color: black;
         border-radius: 50em;
     }
   }
@@ -31,13 +31,20 @@
         font-size: 90px;
         color: #00008B;
         margin-left: 350px;
+        
     }
     
     footer {
         @include basics();
-        font-size: 10px;
-        color: white;        
+        color: black;        
         margin-bottom: 0px;
+        text-align: center;
+        font-size: small;
+        left: 0;
+        bottom:0;
+        position: fixed;
+        width:100%;
+
     }
     #grid {
         height: 450px;
@@ -47,6 +54,7 @@
         background: black;
         margin-top: 5px;
         margin-left: 10px;
+        border: 1px solid #bc4dc6;
         border-radius: 5em
     }
     button {
@@ -58,6 +66,20 @@
 
     #reset{
         @include helpandreset();
+    }
+    #winner{
+        @include basics();
+        display: inline-block; 
+        width: auto;
+        height:auto;
+        position: absolute;         
+        margin-top:130px;
+        margin-left:1025px;
+        margin-right:0px;
+        font-weight: 1900;
+        left: 5%; 
+        color:white;
+        background:black;
     }
     #submit{
         float: none;
@@ -72,6 +94,7 @@
     
     body {
         background-image: linear-gradient(to right, #bc4dc6, #8e76e9, #5294f9, #00aaf7, #12bceb);    
+        background-image:url(https://i.pinimg.com/originals/19/41/64/194164d700735e36890fcb0ae6282c17.gif)
     }
     
     td {
@@ -82,7 +105,7 @@
     
     table {
         margin-top: 20px;
-        margin-right: 100px;
+        margin-right: 140px;
         margin-left: auto;
         float: right;
     }

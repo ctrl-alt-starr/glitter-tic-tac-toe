@@ -33,19 +33,19 @@
                         },
 
                         success: function(data) {
-                            console.log(data)
                             document.documentElement.style.cursor = 'pointer';
                             for (i = 0; i < 9; i++) {
                                 document.getElementsByTagName("td")[i].style.cursor = "pointer";
                             }
+                            console.log(data)
+                            if(data[0]=='None'&&data[1]==0&&data[2]==0){tie(0,0,0)}
                             if (data[0] != 0) {
-                                console.log("already won and goig through 1")
                                 if (game != 3) {
                                     click1 = 'moon' + id
-                                    document.getElementById(click1).src = "/static/moon.png"
+                                    document.getElementById(click1).src = moon
                                     if (data[0] != "None") {
                                         click2 = 'moon' + data[0]
-                                        document.getElementById(click2).src = "/static/star.png"
+                                        document.getElementById(click2).src = star
                                     }
                                 } else {
 
@@ -55,12 +55,8 @@
                                     } else {
                                         document.getElementById(click1).src = moon
                                     }
-                                    click2 = 'symbolmoon' + id
-                                    click3 = 'symbolstar' + id
-                                    document.getElementById(click2).disabled = true;
-                                    document.getElementById(click3).disabled = true;
-                                    document.getElementById(click2).style.visibility = "hidden";
-                                    document.getElementById(click3).style.visibility = "hidden";
+                                                                   
+                                    disablebuttons(false,id)
                                     if (data[0] != "None") {
                                         click4 = 'moon' + data[0]
                                         if (data[3][0] == "x") {
@@ -68,13 +64,9 @@
                                         } else {
                                             document.getElementById(click4).src = moon
                                         }
-                                        click5 = 'symbolmoon' + data[0]
-                                        click6 = 'symbolstar' + data[0]
-                                        document.getElementById(click5).disabled = true;
-                                        document.getElementById(click6).disabled = true;
-                                        document.getElementById(click5).style.visibility = "hidden";
-                                        document.getElementById(click6).style.visibility = "hidden";
+                                        disablebuttons(false,data[0])
                                     }
+                                    
 
                                 }
 
@@ -82,8 +74,7 @@
 
                             } else {
 
-                                if (data[1] != 0) {
-                                    console.log("already won and going through here")
+                                if (data[1] != 0) {                                 
 
                                     var x;
                                     for (x of data[1]) {
@@ -102,25 +93,23 @@
 
                                     }
                                     if (game == 3) {
-                                        click1 = 'moon' + id
-                                        click2 = 'moon' + data[3][2]
-                                        console.log(click1)
-                                        console.log(click2)
+                                        click1 = 'moon' + id                                    
                                         if (data[3][1] == "x") {
-                                            document.getElementById(click1).src = star
-                                            console.log("1")
+                                            document.getElementById(click1).src = star;
+                                            disablebuttons(false,id)
                                         } else if (data[3][1] == "o") {
                                             document.getElementById(click1).src = moon
-                                            console.log("2")
+                                            disablebuttons(false,id)
                                         }
+                                        click2 = 'moon' + data[3][2]
                                         if (data[3][0] == "x") {
                                             document.getElementById(click2).src = star
-                                            console.log("3")
-                                        } else if (data[3][0] == "o") {
+                                            disablebuttons(false,data[3][2])
+                                        } else if (data[3][0] == "o") {                                
                                             document.getElementById(click2).src = moon
-                                            console.log("4")
+                                            disablebuttons(false,data[3][2])
                                         }
-                                        disablebuttons()
+                                        
 
                                     }
                                     sound = document.createElement("audio");
@@ -150,16 +139,12 @@
                                             document.getElementById(click).src = moon
                                         }
                                         else{
-                                            click2 = 'symbolmoon' + id
-                                            click3 = 'symbolstar' + id
-                                            document.getElementById(click2).disabled = true;
-                                            document.getElementById(click3).disabled = true;
-                                            document.getElementById(click2).style.visibility = "hidden";
-                                            document.getElementById(click3).style.visibility = "hidden";
+                                            disablebuttons(false,id);
                                             if(symbol=='x'){document.getElementById(click).src = star
                                             }
                                             else{document.getElementById(click).src = moon}
                                         }
+                                                                               
                                     }
                                 }
 
@@ -186,14 +171,20 @@
                         },
 
                         success: function(data) {
+                            if(data[0]=="tie"){                               
+                                tie(id,data[1],symbol);
+                                return 0;
+                            }
                             console.log(data)
                             if (data[0] != 0) {
                                 click = 'moon' + id
                                 if (game != 3) {
                                     if (data[0] == "player1") {
                                         document.getElementById(click).src = moon;
+                                        document.getElementById("winner").innerHTML="Its Player 2's chance!"
                                     } else if (data[0] == "player2") {
                                         document.getElementById(click).src = star;
+                                        document.getElementById("winner").innerHTML="Its Player 1's chance!"
                                     }
                                 } else {
                                     if (symbol == 'x') {
@@ -201,12 +192,7 @@
                                     } else {
                                         document.getElementById(click).src = moon;
                                     }
-                                    click2 = 'symbolmoon' + id
-                                    click3 = 'symbolstar' + id
-                                    document.getElementById(click2).disabled = true;
-                                    document.getElementById(click3).disabled = true;
-                                    document.getElementById(click2).style.visibility = "hidden";
-                                    document.getElementById(click3).style.visibility = "hidden";
+                                    disablebuttons(false,id)
 
                                 }
                             }
@@ -214,6 +200,7 @@
                                 click = 'moon' + id
                                 if (data[2] == "player1") {
                                         document.getElementById(click).src = moon;
+                                        document.getElementById("winner").innerHTML="Player1 is a mighty fella! The moon wins after all"
                             }   else if (data[2] == "player2") {
                                         document.getElementById(click).src = star;
                                 }
@@ -221,6 +208,7 @@
                                 for (x of data[1]) {
                                     click = 'table' + x
                                     document.getElementById(click).style.background = "#FF1493";
+                                    document.getElementById("winner").innerHTML="Player2 is marvellous! The glitter of the stars defeated the moon!"
                                 }
                                 sound = document.createElement("audio");
                                 sound.src = "static/audio_file.mp3"
@@ -261,6 +249,9 @@
                         window.opponent = data[1];
                         window.start = "yes"
                         window.game = data[0];
+                        if(opponent=="friend"&&game!=3){
+                            document.getElementById("winner").innerHTML="First player gets moon and second player gets stars!"
+                        }
                         var i;
                         for (i = 1; i < 10; i++) {
                             click1 = 'moon' + i;
@@ -290,7 +281,7 @@
             window.location.reload();
         }
 
-        function refreshPage2(data) {
+        function difficulty_setting(data) {
             if (data.value == 'friend') {
                 document.getElementById("difficulty").style.visibility = "hidden";
                 document.getElementById("difficultyid").style.visibility = "hidden";
@@ -306,10 +297,11 @@
             if (game == 3) {
                 window.clickarray=[]
                 for (i = 1; i < 10; i++) {
-                    click1 = 'table' + i;
-                    click2 = 'symbolmoon' + i
-                    click3 = 'symbolstar' + i 
-                    clickarray.push(document.getElementById(click1).onclick)                   
+                    var click1 = 'table' + i;
+                    var click2 = 'symbolmoon' + i
+                    var click3 = 'symbolstar' + i 
+                    clickarray.push(document.getElementById(click1).onclick)   
+                    console.log(clickarray[i])                
                     document.getElementById(click1).onclick = null;
                     document.getElementById(click2).disabled = false;
                     document.getElementById(click3).disabled = false;
@@ -318,34 +310,55 @@
                 }
             } else {
 
-                for (i = 1; i < 10; i++) {
-                    click1 = 'table' + i;
-                    click2 = 'symbolmoon' + i
-                    click3 = 'symbolstar' + i
-                    document.getElementById(click1).onclick= clickarray[i-1]
-                    document.getElementById(click2).disabled = true;
-                    document.getElementById(click3).disabled = true;
-                    document.getElementById(click2).style.visibility = "hidden";
-                    document.getElementById(click3).style.visibility = "hidden";
-                }
+                disablebuttons(true,0)
             }
         }
         $(document).ready(function() {
-            disablebuttons()
+            disablebuttons(true,0)
         });
 
-        function disablebuttons() {
+        function disablebuttons(start,id) {
+            var i
             for (i = 1; i < 10; i++) {
-                click1 = 'table' + i;
-                click2 = 'symbolmoon' + i
-                click3 = 'symbolstar' + i
-                document.getElementById(click1).disabled = false;
+                if(id!=0){i=id
+                console.log("first if")}
+                var click1 = 'table' + i;
+                var click2 = 'symbolmoon' + i
+                var click3 = 'symbolstar' + i
+                if(!start&&id==0){document.getElementById(click1).onclick= clickarray[i-1]}
                 document.getElementById(click2).disabled = true;
                 document.getElementById(click3).disabled = true;
                 document.getElementById(click2).style.visibility = "hidden";
                 document.getElementById(click3).style.visibility = "hidden";
+                if(id!=0){break;}
             }
         }
+        function tie(id,player,symbol){ 
+            if(id!=0){
+                click = 'moon' + id
+                if (game != 3) {
+                   if (player == "player1") {
+                        document.getElementById(click).src = moon;}
+                    else{document.getElementById(click).src = star;    }
+                                           
+                     
+                 } else {
+                       if (symbol == 'x') {
+                           document.getElementById(click).src = star;
+                        } else {
+                         document.getElementById(click).src = moon;
+                         }
+                        disablebuttons(false,id)
+
+                        }    
+            }                            
+            
+            
+            document.getElementById("winner").innerHTML="Aww shucks it's a tie"
+            sound = document.createElement("audio");                                    
+            sound.src = "static/lost.mp3"
+            sound.volume = 0.1;
+            sound.play();}
     </script>
 
 </head>
@@ -357,8 +370,9 @@
 
 </header>
 
-<a href="../help" target="_blank"><button id="help">HELP</button></a>
-<button id="reset" type="submit" onClick="refreshPage()">Reset</button>
+<div></div><a href="../help" target="_blank"><button id="help">HELP</button></a>
+<button id="reset" type="submit" onClick="refreshPage()">Reset</button></div>
+<div id="winner"> Tic Tac Toe with extra glitter <br>    ( ͡~ ͜ʖ ͡°) </div>
 
 
 
@@ -420,7 +434,7 @@
         </div>
         <div class="form-group">
             <label for="opponent"><h5>Opponent</h5></label>
-            <select id="opponent" class="form-control" onchange="refreshPage2(this)">
+            <select id="opponent" class="form-control" onchange="difficulty_setting(this)">
                     <option value="computer" selected>Play against computer</option>
                     <option value="friend">Play with friend</option>
                 </select>

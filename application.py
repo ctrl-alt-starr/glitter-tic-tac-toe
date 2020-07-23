@@ -21,7 +21,7 @@ i=0
 
 app=Flask(__name__)
 @app.route('/')
-def json():
+def start():
     global start
     start=0
     return render_template('firstattempt.html')
@@ -36,7 +36,7 @@ def ai():
     position=data[id]
     isWinner=board.isWinner()
     if(isWinner):
-        return jsonify([0,0])
+        return jsonify([0,0,0])
     if(position in board.available_positions_function() and not (board.isWinner())):
        if(game==3):
            opponent_symbol=symbol
@@ -58,9 +58,9 @@ def ai():
           if((board.isWinner())):    
              return jsonify([0,board.winner_boxes(),"player",[player_symbol,opponent_symbol,bestmove_id]])     
           return jsonify([bestmove_id,0,0,[player_symbol,opponent_symbol]])
-       else: return jsonify(["None",0])
+       else: return jsonify(["None",0,0])
     else:
-         return jsonify([0,0])
+         return jsonify([0,0,0])
 @app.route('/setting',methods= ['POST'])
 def setting():
   global game,difficulty,opponent,board,start
@@ -82,6 +82,7 @@ def human():
              else: board.update_position(position,symbol,"player")
              i+=1
              if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player1"])
+             elif(not len(board.available_positions_function())):return jsonify(["tie","player1"])
              else: return jsonify(["player1",0])     
              
        
@@ -90,6 +91,7 @@ def human():
              else: board.update_position(position,symbol,"opponent")
              i+=1
              if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player2"])
+             elif(not len(board.available_positions_function())):return jsonify(["tie","player2"])
              else: return jsonify(["player2",0])
             
     else:
