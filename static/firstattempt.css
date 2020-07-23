@@ -91,6 +91,7 @@ button:hover {
   margin-right: 0px;
   font-weight: 1900;
   left: 5%;
+  text-transform: none;
   color: white;
   background: black;
 }
@@ -107,9 +108,7 @@ label {
 }
 
 body {
-  background-image: -webkit-gradient(linear, left top, right top, from(#bc4dc6), color-stop(#8e76e9), color-stop(#5294f9), color-stop(#00aaf7), to(#12bceb));
-  background-image: linear-gradient(to right, #bc4dc6, #8e76e9, #5294f9, #00aaf7, #12bceb);
-  background-image: url(https://i.pinimg.com/originals/19/41/64/194164d700735e36890fcb0ae6282c17.gif);
+  background-image: url("https://i.gifer.com/2iiH.gif");
 }
 
 td {

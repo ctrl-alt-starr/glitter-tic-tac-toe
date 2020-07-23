@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 import json
-from minimax import bestmoves,eval
+from tictactoe import bestmoves,eval
 from gameredirection import game_redirection
 import index
 global data 
@@ -32,10 +32,9 @@ def ai():
     if(start!=1):
         return jsonify("Choose the settings first and start a new game to start playing!")
     id=int(request.form["1"])
-    symbol=(request.form["2"])
+    symbol=(request.form["2"]) # This is for Last turn tic tac toe
     position=data[id]
-    isWinner=board.isWinner()
-    if(isWinner):
+    if(board.isWinner()):#If a game has already been won and the player is attempting to play again
         return jsonify([0,0,0])
     if(position in board.available_positions_function() and not (board.isWinner())):
        if(game==3):
@@ -44,11 +43,10 @@ def ai():
            opponent_symbol='o'
        board.update_position(position,opponent_symbol,"opponent")
        bestmove=game_redirection(board.board_function(),board.depth_function(),board.available_positions_function(),game)
-       if(bestmove[0]==[-1,-1]):
+       if(bestmove[0]==[-1,-1]): #When all the moves are over, the algorithm simply returns [-1,-1]
            return jsonify([0,0,position])
        else: bestmove_id=reversed_data[tuple(bestmove[0])]
-       if(board.isWinner()):
-           print(board.winner_boxes())
+       if(board.isWinner()):# If the human player has won with their move
            return jsonify([0,board.winner_boxes(),"opponent",['None',opponent_symbol,"None"]])
        if(board.available_positions!=[]):
           if(game==3):
@@ -56,13 +54,12 @@ def ai():
           else:
              player_symbol='x'
           board.update_position(bestmove[0],player_symbol,"player") 
-          if((board.isWinner())):    
-             print(board.winner_boxes())
+          if((board.isWinner())): #If the computer has won with their move
              return jsonify([0,board.winner_boxes(),"player",[player_symbol,opponent_symbol,bestmove_id]])     
-          return jsonify([bestmove_id,0,0,[player_symbol,opponent_symbol]])
-       else: return jsonify(["None",0,0])
+          return jsonify([bestmove_id,0,0,[player_symbol,opponent_symbol]]) #Nobody won, the game is still going on
+       else: return jsonify(["None",0,0]) # It is a tie
     else:
-         return jsonify([0,0,0])
+         return jsonify([0,0,0]) #Nobody won but the moves are over
 @app.route('/setting',methods= ['POST'])
 def setting():
   global game,difficulty,opponent,board,start
@@ -100,10 +97,7 @@ def human():
         return jsonify([0,0])
 @app.route('/help')
 def help():  
-    return render_template('rules.html')
-
-
-    
+    return render_template('rules.html') 
  
 
 if __name__=="__main__":

@@ -23,7 +23,7 @@
                 window.alert("Choose the settings first and start a new game to start playing!");
                 return null
             }
-            if (opponent == "computer") {
+            if (opponent == "computer") {//the opponent is ai
                 $(function() {
                     $.ajax({
                         type: 'POST',
@@ -46,8 +46,8 @@
                             for (i = 0; i < 9; i++) {
                                 document.getElementsByTagName("td")[i].style.cursor = "pointer";
                             }
-                            if(data[0]=='None'&&data[1]==0&&data[2]==0){tie(0,0,0)}
-                            if (data[0] != 0) {
+                            if(data[0]=='None'&&data[1]==0&&data[2]==0){tie(0,0,0)} //tie
+                            if (data[0] != 0) { //There is no winner, no tie and there are moves left
                                 if (game != 3) {
                                     click1 = 'moon' + id
                                     document.getElementById(click1).src = moon
@@ -80,9 +80,9 @@
 
 
 
-                            } else {
+                            } else {//There is a winner or its a null move
 
-                                if (data[1] != 0) {                                 
+                                if (data[1] != 0) {//There is a winner                                 
 
                                     var x;
                                     for (x of data[1]) {
@@ -144,7 +144,7 @@
                                     sound.play();
 
                                 }
-                                if(data[0]==0 && data[1]==0){
+                                if(data[0]==0 && data[1]==0){//moves are over but have to update the previous moves
                                     if(data[2]!=0){
                                         click='moon'+id
                                         if(game!=3){
@@ -172,7 +172,7 @@
 
 
 
-            } else {
+            } else { //opponent is human
                 $(function() {
                     $.ajax({
                         type: 'POST',
@@ -188,7 +188,7 @@
                                 return 0;
                             }
                             console.log(data)
-                            if (data[0] != 0) {
+                            if (data[0] != 0) {// there is no winner yet and the move is not a null move
                                 click = 'moon' + id
                                 if (game != 3) {
                                     if (data[0] == "player1") {
@@ -208,19 +208,20 @@
 
                                 }
                             }
-                            if (data[1] != 0) {
+                            if (data[1] != 0) {//winner
                                 click = 'moon' + id
                                 if (data[2] == "player1") {
                                         document.getElementById(click).src = moon;
                                         document.getElementById("winner").innerHTML="Player1 is a mighty fella! The moon wins after all"
                             }   else if (data[2] == "player2") {
                                         document.getElementById(click).src = star;
+                                        document.getElementById("winner").innerHTML="Player2 is marvellous! The glitter of the stars defeated the moon!"
                                 }
                                 var x;
                                 for (x of data[1]) {
                                     click = 'table' + x
                                     document.getElementById(click).style.background = "#FF1493";
-                                    document.getElementById("winner").innerHTML="Player2 is marvellous! The glitter of the stars defeated the moon!"
+                                    
                                 }
                                 sound = document.createElement("audio");
                                 sound.src = "static/audio_file.mp3"
@@ -257,14 +258,14 @@
                     })
                     .done(function(data) {
 
-                        document.getElementById("winner").innerHTML="Tic Tac Toe with extra glitter <br>    ( ͡~ ͜ʖ ͡°)"
+                        document.getElementById("winner").innerHTML="Tic Tac Toe with extra glitter <br><br>  ( ͡~ ͜ʖ ͡°)<br>"
                         window.opponent = data[1];
                         window.start = "yes"
                         window.game = data[0];
                         if(game==3){
-                            gamehasbeenplayedbefore= true;
+                            gamehasbeenplayedbefore= true; //this is used to make the moon and star buttons disappear once last turn tic tac toe is over
                         }
-                        iterative=0
+                        iterative=0 // this is to make sure the first move in last turn tic tac toe is not in centre
                         if(opponent=="friend"&&game!=3){
                             document.getElementById("winner").innerHTML="First player gets moon and second player gets stars!"
                         }
@@ -342,7 +343,6 @@
                 var click2 = 'symbolmoon' + i
                 var click3 = 'symbolstar' + i
                 if(!start&&id==0&&gamehasbeenplayedbefore){
-                    console.log("click")
                     document.getElementById(click1).onclick= clickarray[i-1]}
                 document.getElementById(click2).disabled = true;
                 document.getElementById(click3).disabled = true;
@@ -390,7 +390,7 @@
 
 <div></div><a href="../help" target="_blank"><button id="help">HELP</button></a>
 <button id="reset" type="submit" onClick="refreshPage()">Reset</button></div>
-<div id="winner"> Tic Tac Toe with extra glitter <br>    ( ͡~ ͜ʖ ͡°) </div>
+<div id="winner"> Tic Tac Toe with extra glitter <br><br>    ( ͡~ ͜ʖ ͡°)<br> </div>
 
 
 

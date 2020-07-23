@@ -1,4 +1,4 @@
-import minimax
+import tictactoe
 import last_turn_tic_tac_toe
 global data 
 data= {
@@ -27,7 +27,7 @@ class Board:
         self.winner_function(turn)
     def winner_function(self,turn):
         if(self.game==1 or self.game ==2):
-           self.winner= minimax.eval(self.board,self.game)  
+           self.winner= tictactoe.eval(self.board,self.game)  
         else:
           self.winner= last_turn_tic_tac_toe.eval(self.board,turn)  
         return self.winner

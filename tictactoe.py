@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from tac import neighbors
+from tactoetic import neighbors
 import numpy as np
 import random
 
