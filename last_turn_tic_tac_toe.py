@@ -1,3 +1,4 @@
+import random
 def movesover(board):
   for i in range(0,3):
     for j in range(0,3):
@@ -27,7 +28,16 @@ def eval(board,turn):
         return 10
       elif (turn=="opponent"): return -10
    return 0
-def bestmoves(board,max_depth):
+def bestmoves(board,max_depth,available_positions):
+  if(len(available_positions)==8):
+    for i in range(0,3):
+      for j in range(0,3):
+        if(board[i][j]!=''):
+          occupied_by=board[i][j]
+    if(occupied_by=='x'):
+      return [random.choice(available_positions),'o']
+    else:
+      return [random.choice(available_positions),'x']
   bestval=-1000
   bestmove='x'
   bestmoveposition=[-1,-1]
@@ -37,12 +47,9 @@ def bestmoves(board,max_depth):
        if (board[i][j])=='':
         board[i][j]=move
         moveval=minimax(board,0, max_depth,False,"player",-1000,1000)
-        #print([i,j,move,moveval,bestval])
         board[i][j]=''
         if (moveval>bestval):
           bestval=moveval
-          #if(moveval==0):
-            #print([moveval,bestval])
           bestmoveposition=[i,j]
           bestmove=move
   return [bestmoveposition,bestmove]

@@ -10,7 +10,6 @@
         window.star = "/static/star.png"
 
         function human(id, symbol) {
-            console.log(symbol)
             if (start == "no") {
                 window.alert("Choose the settings first and start a new game to start playing!");
                 return null
@@ -26,13 +25,20 @@
 
                         },
                         beforeSend: function() {
-                            document.getElementsByTagName("td")[0].style.cursor = "wait";
+                            document.documentElement.style.cursor = 'wait';
+                            for (i = 0; i < 9; i++) {
+                                document.getElementsByTagName("td")[i].style.cursor = "wait";
+                            }
+
                         },
 
                         success: function(data) {
-                            document.getElementsByTagName("td")[0].style.cursor = "pointer";
-                            console.log(data)
+                            document.documentElement.style.cursor = 'pointer';
+                            for (i = 0; i < 9; i++) {
+                                document.getElementsByTagName("td")[i].style.cursor = "pointer";
+                            }
                             if (data[0] != 0) {
+                                console.log("already won and goig through 1")
                                 if (game != 3) {
                                     click1 = 'moon' + id
                                     document.getElementById(click1).src = "/static/moon.png"
@@ -44,7 +50,6 @@
 
                                     click1 = 'moon' + id
                                     if (data[3][1] == "x") {
-                                        console.log(data[3][1])
                                         document.getElementById(click1).src = star
                                     } else {
                                         document.getElementById(click1).src = moon
@@ -57,7 +62,6 @@
                                     document.getElementById(click3).style.visibility = "hidden";
                                     if (data[0] != "None") {
                                         click4 = 'moon' + data[0]
-                                        console.log(click2)
                                         if (data[3][0] == "x") {
                                             document.getElementById(click4).src = star
                                         } else {
@@ -78,33 +82,44 @@
                             } else {
 
                                 if (data[1] != 0) {
+                                    console.log("already won and going through here")
 
                                     var x;
                                     for (x of data[1]) {
 
                                         click = 'table' + x
                                         click1 = 'moon' + x
-                                        document.getElementById(click).style.background = "#C5B358";
-                                        if (data[2] == 'player') {
-                                            document.getElementById(click1).src = star;
-                                        } else {
-                                            document.getElementById(click1).src = moon;
+                                        document.getElementById(click).style.background = "#FF1493";
+                                        if (game != 3) {
+                                            if (data[2] == 'player') {
+                                                document.getElementById(click1).src = star;
+                                            } else {
+                                                document.getElementById(click1).src = moon;
+                                            }
                                         }
+
 
                                     }
                                     if (game == 3) {
                                         click1 = 'moon' + id
                                         click2 = 'moon' + data[3][2]
+                                        console.log(click1)
+                                        console.log(click2)
                                         if (data[3][1] == "x") {
                                             document.getElementById(click1).src = star
-                                        } else {
-                                            document.getElementById(click1).src = moon
-                                        }
-                                        if (data[3][1] == "x") {
-                                            document.getElementById(click2).src = star
+                                            console.log("1")
                                         } else if (data[3][1] == "o") {
-                                            document.getElementById(click2).src = moon
+                                            document.getElementById(click1).src = moon
+                                            console.log("2")
                                         }
+                                        if (data[3][0] == "x") {
+                                            document.getElementById(click2).src = star
+                                            console.log("3")
+                                        } else if (data[3][0] == "o") {
+                                            document.getElementById(click2).src = moon
+                                            console.log("4")
+                                        }
+                                        disablebuttons()
 
                                     }
                                     sound = document.createElement("audio");
@@ -146,23 +161,40 @@
                         type: 'POST',
                         url: "/human",
                         data: {
-                            1: id
+                            1: id,
+                            2: symbol
                         },
 
                         success: function(data) {
-                            click = 'moon' + id
-                            if (data[0] == "player1") {
-                                document.getElementById(click).src = "/static/moon.png"
-                            } else if (data[0] == "player2") {
-                                document.getElementById(click).src = "/static/star.png"
+                            console.log(data)
+                            if (data[0] != 0) {
+                                click = 'moon' + id
+                                if (game != 3) {
+                                    if (data[0] == "player1") {
+                                        document.getElementById(click).src = moon;
+                                    } else if (data[0] == "player2") {
+                                        document.getElementById(click).src = star;
+                                    }
+                                } else {
+                                    if (symbol == 'x') {
+                                        document.getElementById(click).src = star;
+                                    } else {
+                                        document.getElementById(click).src = moon;
+                                    }
+                                    click2 = 'symbolmoon' + id
+                                    click3 = 'symbolstar' + id
+                                    document.getElementById(click2).disabled = true;
+                                    document.getElementById(click3).disabled = true;
+                                    document.getElementById(click2).style.visibility = "hidden";
+                                    document.getElementById(click3).style.visibility = "hidden";
+
+                                }
                             }
                             if (data[1] != 0) {
                                 var x;
                                 for (x of data[1]) {
-
                                     click = 'table' + x
-
-                                    document.getElementById(click).style.background = "#C5B358";
+                                    document.getElementById(click).style.background = "#FF1493";
                                 }
                                 sound = document.createElement("audio");
                                 sound.src = "static/audio_file.mp3"
@@ -187,7 +219,6 @@
 
         $(document).ready(function() {
             $('form').on('submit', function(event) {
-                console.log("sending data")
                 $.ajax({
                         data: {
                             game: $('#game').val(),
@@ -199,7 +230,7 @@
                         url: '/setting'
                     })
                     .done(function(data) {
-                        console.log("got data back")
+
 
                         window.opponent = data[1];
                         window.start = "yes"
@@ -212,11 +243,14 @@
                             document.getElementById(click2).style.background = "";
                         }
                         if (data[0] == '2') {
-                            document.getElementById("title").innerHTML = "Tac-Toe-Tic";
+                            document.getElementById("title").innerHTML = "Tac-Toe-Tic!";
+                            document.getElementById("title").style.marginLeft = "350px";
                         } else if (data[0] == '1') {
-                            document.getElementById("title").innerHTML = "Tic-Tac-Toe";
+                            document.getElementById("title").innerHTML = "Tic-Tac-Toe!";
+                            document.getElementById("title").style.marginLeft = "350px";
                         } else {
-                            document.getElementById("title").innerHTML = "Last turn Tic-Tac-Toe";
+                            document.getElementById("title").innerHTML = "Last turn Tic-Tac-Toe!";
+                            document.getElementById("title").style.marginLeft = "20px";
                         }
                         gamesettings(game);
 
@@ -244,27 +278,23 @@
 
         function gamesettings(game) {
             if (game == 3) {
-                console.log("yay")
+
                 for (i = 1; i < 10; i++) {
                     click1 = 'table' + i;
                     click2 = 'symbolmoon' + i
                     click3 = 'symbolstar' + i
-                    console.log(i)
-                    console.log(click2)
-                    document.getElementById(click1).disabled = true;;
+                    document.getElementById(click1).onclick = null;
                     document.getElementById(click2).disabled = false;
                     document.getElementById(click3).disabled = false;
                     document.getElementById(click2).style.visibility = "visible";
                     document.getElementById(click3).style.visibility = "visible";
                 }
             } else {
-                console.log("yay2")
+
                 for (i = 1; i < 10; i++) {
                     click1 = 'table' + i;
                     click2 = 'symbolmoon' + i
                     click3 = 'symbolstar' + i
-                    console.log(i)
-                    console.log(click2)
                     document.getElementById(click1).disabled = false;
                     document.getElementById(click2).disabled = true;
                     document.getElementById(click3).disabled = true;
@@ -274,19 +304,21 @@
             }
         }
         $(document).ready(function() {
+            disablebuttons()
+        });
+
+        function disablebuttons() {
             for (i = 1; i < 10; i++) {
                 click1 = 'table' + i;
                 click2 = 'symbolmoon' + i
                 click3 = 'symbolstar' + i
-                console.log(i)
-                console.log(click2)
                 document.getElementById(click1).disabled = false;
                 document.getElementById(click2).disabled = true;
                 document.getElementById(click3).disabled = true;
                 document.getElementById(click2).style.visibility = "hidden";
                 document.getElementById(click3).style.visibility = "hidden";
             }
-        });
+        }
     </script>
 
 </head>

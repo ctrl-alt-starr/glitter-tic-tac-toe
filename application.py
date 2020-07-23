@@ -33,12 +33,7 @@ def ai():
         return jsonify("Choose the settings first and start a new game to start playing!")
     id=int(request.form["1"])
     symbol=(request.form["2"])
-    print("_______")
-    print([id,type(id)])
-    print([symbol,type(symbol)])
-    print("________")
     position=data[id]
-    print(position)
     isWinner=board.isWinner()
     if(isWinner):
         return jsonify([0,0])
@@ -48,7 +43,7 @@ def ai():
        else:
            opponent_symbol='o'
        board.update_position(position,opponent_symbol,"opponent")
-       bestmove=game_redirection(board.board_function(),board.depth_function(),game)
+       bestmove=game_redirection(board.board_function(),board.depth_function(),board.available_positions_function(),game)
        bestmove_id=reversed_data[tuple(bestmove[0])]
        if(board.isWinner()):
            return jsonify([0,board.winner_boxes(),"opponent",['None',opponent_symbol,"None"]])
@@ -80,23 +75,26 @@ def setting():
 def human():
     global i
     id=int(request.form["1"])
+    symbol=(request.form["2"])
     position=data[id]
     if(position in board.available_positions_function() and not (board.isWinner())):
          if(i%2==0):
-             board.update_position(position,'x')
+             if(game!=3):board.update_position(position,'x',"player")
+             else: board.update_position(position,symbol,"player")
              i+=1
              if(board.isWinner()):return jsonify(["player1",board.winner_boxes()])
              else: return jsonify(["player1",0])     
              
        
          else:
-             board.update_position(position,'o')
+             if(game!=3):board.update_position(position,'o',"opponent")
+             else: board.update_position(position,symbol,"opponent")
              i+=1
              if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player2"])
              else: return jsonify(["player2",0])
             
     else:
-        return jsonify(0)
+        return jsonify([0,0])
 @app.route('/help')
 def help():  
     return render_template('rules.html')
