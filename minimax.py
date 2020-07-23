@@ -58,7 +58,7 @@ def bestmoves(board,max_depth,game):
   for i in range(0,3):
     for j in range(0,3):
       if (board[i][j])=='':
-        if(max_depth==1):
+        if(max_depth==0):
           moves[i][j]=0
         else:
           board[i][j]=player
@@ -69,7 +69,6 @@ def bestmoves(board,max_depth,game):
           moves[i][j]=moveval
           board[i][j]=''   
   choice=random_move(moves)
-  print(choice)
   return choice
 
 def random_move(moves):
@@ -79,7 +78,6 @@ def random_move(moves):
     for j in range(0,3):
        if moves[i][j]==max_value:
           max_moves.append([i,j])
-  print([max_value,max_moves])
   return random.choice(max_moves)
   
 

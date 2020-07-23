@@ -55,8 +55,7 @@ def ai():
           else:
              player_symbol='x'
           board.update_position(bestmove[0],player_symbol,"player") 
-          if((board.isWinner())):
-             print("went through this")
+          if((board.isWinner())):    
              return jsonify([0,board.winner_boxes(),"player",[player_symbol,opponent_symbol,bestmove_id]])     
           return jsonify([bestmove_id,0,0,[player_symbol,opponent_symbol]])
        else: return jsonify(["None",0])
@@ -64,12 +63,10 @@ def ai():
          return jsonify([0,0])
 @app.route('/setting',methods= ['POST'])
 def setting():
-  print("HII")
   global game,difficulty,opponent,board,start
   game= int(request.form['game'])
   difficulty= int (request.form['difficulty'])
   opponent= request.form['opponent']
-  print([game,difficulty,opponent])
   board=index.Board(difficulty,game)
   start=1
   return jsonify([game,opponent,difficulty])

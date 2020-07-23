@@ -33,12 +33,16 @@ def bestmoves(board,max_depth,available_positions):
     for i in range(0,3):
       for j in range(0,3):
         if(board[i][j]!=''):
+          occupied_box= [i,j]
           occupied_by=board[i][j]
+    if(occupied_box==[1,1]):
+      print("1,1")
+      available_positions=[[0,1],[1,0],[1,2],[2,1]]
     if(occupied_by=='x'):
       return [random.choice(available_positions),'o']
     else:
       return [random.choice(available_positions),'x']
-  if(max_depth==1):
+  if(max_depth==0):
     return [random.choice(available_positions),random.choice(['x','o'])]
   bestval=-1000
   bestmove='x'
@@ -53,7 +57,7 @@ def bestmoves(board,max_depth,available_positions):
         if (moveval>bestval):
           bestval=moveval
           bestmoveposition=[i,j]
-          bestmove=move
+          bestmove=move        
   return [bestmoveposition,bestmove]
 def minimax(board,depth,max_depth,ismax,player,alpha,beta):
   if (player=="player"):
