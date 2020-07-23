@@ -44,10 +44,22 @@ class Board:
         return self.maxDepth
     def winner_orientation(self):
         for i in range(0,3):
-            if (self.board[i][0]==self.board[i][1]==self.board[i][2]!=""): return [[i,0],[i,1],[i,2]]     
-            elif (self.board[0][i]==self.board[1][i]==self.board[2][i]!=""): return [[0,i],[1,i],[2,i]]  
-            elif (self.board[0][0]==self.board[1][1]==self.board[2][2]!=""): return [[0,0],[1,1],[2,2]]
-            elif (self.board[0][2]==self.board[1][1]==self.board[2][0]!=""):return [[0,2],[1,1],[2,0]]
+            if(self.game!=2):
+                 if (self.board[i][0]==self.board[i][1]==self.board[i][2]!=""): return [[i,0],[i,1],[i,2]]     
+                 elif (self.board[0][i]==self.board[1][i]==self.board[2][i]!=""): return [[0,i],[1,i],[2,i]]  
+                 elif (self.board[0][0]==self.board[1][1]==self.board[2][2]!=""): return [[0,0],[1,1],[2,2]]
+                 elif (self.board[0][2]==self.board[1][1]==self.board[2][0]!=""):return [[0,2],[1,1],[2,0]]
+            else:
+                if(self.winner==10):symbol='x'
+                else: symbol='o'
+                winnerboxes=[]
+                for i in range(0,3):
+                    for j in range(0,3):
+                        if(self.board[i][j]==symbol):
+                            winnerboxes.append([i,j])
+                return winnerboxes
+            
+
     def winner_boxes(self):
         boxes=self.winner_orientation()
         box_id=[]

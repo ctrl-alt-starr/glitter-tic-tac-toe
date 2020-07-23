@@ -87,10 +87,11 @@
                                     var x;
                                     for (x of data[1]) {
 
-                                        click = 'table' + x
-                                        click1 = 'moon' + x
+                                        var click = 'table' + x
+                                        var click1 = 'moon' + x
+                                        
                                         document.getElementById(click).style.background = "#FF1493";
-                                        if (game != 3) {
+                                        if (game==1) {
                                             if (data[2] == 'player') {
                                                 document.getElementById(click1).src = star;
                                             } else {
@@ -100,24 +101,28 @@
 
 
                                     }
+                                    if(game==2){
+                                        var click1='moon'+id
+                                        document.getElementById(click1).src = moon;
+                                        if(data[3][2]!="None"){                                            
+                                            var click1='moon'+data[3][2]
+                                            document.getElementById(click1).src = star;                                            
+                                        }
+                                    }
                                     if (game == 3) {
                                         click1 = 'moon' + id                                    
                                         if (data[3][1] == "x") {
                                             document.getElementById(click1).src = star;
-                                            disablebuttons(false,id)
                                         } else if (data[3][1] == "o") {
                                             document.getElementById(click1).src = moon
-                                            disablebuttons(false,id)
                                         }
                                         click2 = 'moon' + data[3][2]
                                         if (data[3][0] == "x") {
                                             document.getElementById(click2).src = star
-                                            disablebuttons(false,data[3][2])
                                         } else if (data[3][0] == "o") {                                
                                             document.getElementById(click2).src = moon
-                                            disablebuttons(false,data[3][2])
                                         }
-                                        
+                                        disablebuttons(false,0)
 
                                     }
                                     sound = document.createElement("audio");
@@ -129,7 +134,7 @@
                                             sound.src = lose
                                         } else {
                                             sound.src = win
-                                            document.getElementById("winner").innerHTML="This is me <br> ᕕ༼✪ل͜✪༽ᕗ So proud of your win kiddo"
+                                            document.getElementById("winner").innerHTML="This is me right now<br> ᕕ༼✪ل͜✪༽ᕗ So proud of your win kiddo"
                                         }
                                     } else {
                                         if (data[2] == "player") {
@@ -209,20 +214,22 @@
                                 }
                             }
                             if (data[1] != 0) {//winner
+                                if(game==3&&data[3]=="x" || data[2]=="player2"){image=star}
+                                else if((game==3&&data[3]=="o") || data[2]=="player1"){image=moon}
                                 click = 'moon' + id
-                                if (data[2] == "player1") {
-                                        document.getElementById(click).src = moon;
-                                        document.getElementById("winner").innerHTML="Player1 is a mighty fella! The moon wins after all"
-                            }   else if (data[2] == "player2") {
-                                        document.getElementById(click).src = star;
-                                        document.getElementById("winner").innerHTML="Player2 is marvellous! The glitter of the stars defeated the moon!"
-                                }
+                                document.getElementById(click).src = image;
+                                if(game!=2&&data[2]=="player1" || game==2&&data[2]=="player2"){document.getElementById("winner").innerHTML="Player1 is a mighty fella! The moon wins after all"}
+                                else if(game==2&&data[2]=="player1" || game!=2&&data[2]=="player2"){ document.getElementById("winner").innerHTML="Player2 is marvellous! The glitter of the stars defeated the moon!"}
+                                disablebuttons(false,0)                        
                                 var x;
                                 for (x of data[1]) {
-                                    click = 'table' + x
-                                    document.getElementById(click).style.background = "#FF1493";
-                                    
+                                    click = 'table' + x           
+                                    document.getElementById(click).style.background = "#FF1493";                         
+                                                                   
+                                                                       
+                        
                                 }
+                                
                                 sound = document.createElement("audio");
                                 sound.src = "static/audio_file.mp3"
                                 sound.volume = 0.1;

@@ -62,12 +62,13 @@ def ai():
          return jsonify([0,0,0]) #Nobody won but the moves are over
 @app.route('/setting',methods= ['POST'])
 def setting():
-  global game,difficulty,opponent,board,start
+  global game,difficulty,opponent,board,start,i
   game= int(request.form['game'])
   difficulty= int (request.form['difficulty'])
   opponent= request.form['opponent']
   board=index.Board(difficulty,game)
   start=1
+  i=0
   return jsonify([game,opponent,difficulty])
 @app.route('/human',methods= ['POST'])
 def human():
@@ -80,7 +81,7 @@ def human():
              if(game!=3):board.update_position(position,'x',"player")
              else: board.update_position(position,symbol,"player")
              i+=1
-             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player1"])
+             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player1",symbol])
              elif(not len(board.available_positions_function())):return jsonify(["tie","player1"])
              else: return jsonify(["player1",0])     
              
@@ -89,7 +90,7 @@ def human():
              if(game!=3):board.update_position(position,'o',"opponent")
              else: board.update_position(position,symbol,"opponent")
              i+=1
-             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player2"])
+             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player2",symbol])
              elif(not len(board.available_positions_function())):return jsonify(["tie","player2"])
              else: return jsonify(["player2",0])
             
