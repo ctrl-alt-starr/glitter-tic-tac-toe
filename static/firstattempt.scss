@@ -1,38 +1,77 @@
-    #title {
-        font-family: Georgia, serif;
+@mixin basics() {
+    font-family: Georgia, serif;
+    letter-spacing: 3px;
+    word-spacing: 3px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  @mixin helpandreset() {
+    padding: 20px 0;
+    float: right;
+    background: black;
+    color: white;
+  }
+  @mixin buttonbasics(){
+    @include basics();
+    background:#eeb4e5;
+    padding: 5px 0;
+    border: 1px solid black;
+    color: black;        
+    font-size: 10px;
+    margin-left: 10px;
+    &:hover {
+        background: #ffffff;
+        color: #000000;
+        border-radius: 50em;
+    }
+  }
+
+  #title {
+        @include basics();
         font-size: 90px;
-        letter-spacing: 5px;
-        word-spacing: 6px;
-        color: #191970;
-        font-weight: 900;
-        margin-left: 30px;
+        color: #00008B;
+        margin-left: 350px;
     }
     
     footer {
-        font-family: Georgia, serif;
-        font-size: 9px;
-        letter-spacing: 5px;
-        word-spacing: 6px;
-        color: white;
-        font-weight: 900;
-        margin-top: auto;
+        @include basics();
+        font-size: 10px;
+        color: white;        
         margin-bottom: 0px;
     }
-    
+    #grid {
+        height: 450px;
+        width: 300px;
+        border: 15px;
+        padding: 50px;
+        background: black;
+        margin-top: 5px;
+        margin-left: 10px;
+        border-radius: 5em
+    }
+    button {
+        @include basics();
+        @include buttonbasics();}
+    #help{
+        @include helpandreset();
+    }
+
+    #reset{
+        @include helpandreset();
+    }
+    #submit{
+        float: none;
+        margin-top:30px;
+        margin-left:45px;
+        padding: 10px;
+        background:white;
+    }
     label {
         color: white;
     }
     
     body {
-        background: radial-gradient( circle farthest-corner at 1.5% 1.4%, rgba(159, 227, 255, 1) 0%, rgba(255, 177, 219, 1) 100.2%);
-    }
-    
-    #help {
-        float: right;
-        margin-bottom: 0px;
-        padding: 20px;
-        background: black;
-        color: white;
+        background-image: linear-gradient(to right, #bc4dc6, #8e76e9, #5294f9, #00aaf7, #12bceb);    
     }
     
     td {
@@ -56,86 +95,13 @@
     .hori {
         border-top: 5px solid black;
         border-bottom: 5px solid black;
+    }      
+    h2 {
+        color: darkblue;
+        font-size: 40px;
+        @include basics();
     }
-    
-    #grid {
-        height: 450px;
-        width: 300px;
-        border: 15px;
-        padding: 50px;
-        background: black;
-        margin-top: 5px;
-        margin-left: 10px;
-        border-radius: 5em
-    }
-    
-    button {
-        background: #eeb4e5;
-        padding: 5px 0;
-        border: 1px solid #333;
-        color: #333;
-        font-weight: 100;
-        text-transform: uppercase;
-        font-size: 10px;
-        margin-left: 5px;
-        letter-spacing: 3px;
-        transition: all .2s ease-in-out;
-        &:hover {
-            background: #000000;
-            color: #ffffff;
-            border-radius: 50em;
-        }
-    }
-    
-    #character {
-        background-color: black;
-        height: 100px;
-        width: 80px;
-        margin-left: 10x;
-        border-radius: 50em;
-        &:hover {
-            -webkit-box-shadow: 10px 10px 20px 10px #000000;
-            box-shadow: 10px 10px 20px 10px #000000;
-        }
-    }
-    
-    #gender {
-        border-radius: 50em;
-        background-color: black;
-        border: none;
-        margin-left: 35px;
-        margin-top: 60px;
-        -webkit-box-shadow: 5px 5px 15px 5px #FFB5F9;
-        box-shadow: 5px 5px 15px 5px #ee0ccb;
-        cursor: pointer;
-    }
-    
-    .range-slider__range {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 250px;
-        height: 10px;
-        outline: none;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        background-color: #ee0ccb;
-    }
-    
-    .range-slider__range::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 25px;
-        height: 25px;
-        background-color: #303395;
-        border: 5px solid #ffffff;
-        border-radius: 80%;
-        cursor: pointer;
-        &:hover {
-            background: #000000;
-            border-radius: 50em;
-        }
-    }
-    
+       
     h5 {
         color: pink;
         font-size: 20px;
@@ -144,32 +110,14 @@
     h6 {
         color: pink;
         font-size: 20px;
-    }
-    
-    #help_script {
-        background: #000000;
-    }
-    
+    }    
+     
     p {
         color: black;
     }
     
     select {
-        background: #eeb4e5;
-        padding: 5px 0;
-        border: 1px solid #333;
-        color: #333;
-        font-weight: 100;
-        text-transform: uppercase;
-        font-size: 10px;
-        margin-left: 5px;
-        letter-spacing: 3px;
-        transition: all .2s ease-in- pointer;
-        &:hover {
-            background: #000000;
-            color: #ffffff;
-            border-radius: 50em;
-        }
+        @include buttonbasics();
     }
     
     #new-game {
@@ -203,10 +151,4 @@
         background-size: cover;
     }
     
-    h2 {
-        color: darkblue;
-        font-family: Georgia, serif;
-        font-size: 40px;
-        letter-spacing: 5px;
-        word-spacing: 6px;
-    }
+    

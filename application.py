@@ -24,7 +24,7 @@ app=Flask(__name__)
 def json():
     global start
     start=0
-    return render_template('firstattempt.html')
+    return render_template('first.html')
 
 @app.route('/ai',methods=["POST"])
 def ai():
