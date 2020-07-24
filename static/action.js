@@ -36,6 +36,9 @@
                         
                         success: function(data) {     
                             console.log(data) 
+                            console.log("___________")
+                            console.log(id)
+                            console.log("___________")
                         for (i = 0; i < 9; i++) {
                             document.getElementsByTagName("td")[i].style.cursor = "pointer";
                         }    
@@ -113,6 +116,7 @@
 
                         success: function(data) {
                             console.log(data)
+                            
                             if(data["player2"]){    
                                 console.log("opponent")                            
                                 document.getElementById("winner").innerHTML="Its Player 1's chance!"

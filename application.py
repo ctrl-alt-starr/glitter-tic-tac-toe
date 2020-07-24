@@ -50,7 +50,7 @@ def ai():
         
        bestmove=game_redirection(board.board_function(),board.depth_function(),board.available_positions_function(),game)
        if(bestmove[0]==[-1,-1]): #When all the moves are over, the algorithm simply returns [-1,-1]
-           return jsonify({'winner':False,'winner_boxes':"None",'whoWon':"None",'symbol':["None",opponent_symbol],'computermove':"None","updateopponent":True,"updateplayer":False})
+           return jsonify({'winner':"tie",'winner_boxes':"None",'whoWon':"None",'symbol':["None",opponent_symbol],'computermove':"None","updateopponent":True,"updateplayer":False})
        bestmove_id=reversed_data[tuple(bestmove[0])]
        
        if(board.available_positions!=[]):
