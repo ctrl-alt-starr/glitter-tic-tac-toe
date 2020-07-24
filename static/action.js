@@ -5,16 +5,16 @@ window.ITERATIVE=0
 window.ALREADY_PLAYED=false
 
 function human(id, symbol) {
-            
+            if (START == "no") {
+                window.alert("Choose the settings first and start a new game to start playing!");
+                return null
+            }
             if(ITERATIVE==0&&GAME==3 && id==5){
                 window.alert("In Last turn tic-tac-toe,the first move cannot be in the centre square!")
                 return null;
             }          
             ITERATIVE=1
-            if (START == "no") {
-                window.alert("Choose the settings first and start a new game to start playing!");
-                return null
-            }
+            
             if (OPPONENT == "computer") {//the opponent is ai
                 $(function() {
                     $.ajax({
@@ -276,15 +276,15 @@ function winnerUpdate(winner_boxes,player){
             document.getElementById(click).style.background = "#FF1493";}
            
         sound = document.createElement("audio");
-        win = "static/win.mp3"
-        lose = "static/lost.mp3"
+        WIN = "static/win.mp3"
+        LOSE = "static/lost.mp3"
         if (player == "player") {
                 if(OPPONENT=="computer"){
-                    sound.src = lose
+                    sound.src = LOSE
                     document.getElementById("winner").innerHTML="This is you right now <br> (ಥ ͜ʖಥ) <br>, isn't? Sucks to lose lol"
                }
                else{
-                sound.src = win
+                sound.src = WIN
                 if(GAME==3){document.getElementById("winner").innerHTML="Omg! Player 1 sure knows how to play last turn tic tac toe!"
             }
                  else{document.getElementById("winner").innerHTML="Player1 is a mighty fella! The moon wins after all"}  
@@ -292,7 +292,7 @@ function winnerUpdate(winner_boxes,player){
                 
             } 
         else {
-                sound.src = win
+                sound.src = WIN
                 if (OPPONENT == "computer"){
                     document.getElementById("winner").innerHTML="This is me right now<br> ᕕ༼✪ل͜✪༽ᕗ So proud of your win kiddo"
                 } 

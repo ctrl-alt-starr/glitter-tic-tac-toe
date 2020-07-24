@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, render_template
 import json
 from tictactoe import bestmoves,eval
 from gameredirection import game_redirection
-import index
+import BoardClass
 global DATA 
 DATA= {
                 1:[0,0],
@@ -74,7 +74,7 @@ def setting():
   GAME= int(request.form['game'])
   DIFFICULTY= int (request.form['difficulty'])
   OPPONENT= request.form['opponent']
-  board=index.Board(DIFFICULTY,GAME)
+  board=BoardClass.Board(DIFFICULTY,GAME)
   START=1
   i=0
   return jsonify([GAME,OPPONENT,DIFFICULTY])
