@@ -36,7 +36,6 @@ def bestmoves(board,max_depth,available_positions):
           occupied_box= [i,j]
           occupied_by=board[i][j]
     if(occupied_box==[1,1]):
-      print("1,1")
       available_positions=[[0,1],[1,0],[1,2],[2,1]]
     if(occupied_by=='x'):
       return [random.choice(available_positions),'o']
@@ -66,19 +65,11 @@ def minimax(board,depth,max_depth,ismax,player,alpha,beta):
     score=eval(board,"opponent")  
   if score==10 : 
     return score-depth
-  if score == -10 : 
-   # if((board==board2).all()):
-    # print(score)
-   #  print(board)
-    # print("inside negative score")
+  if score == -10 :
     return score+depth
   if depth==max_depth:
     return score
-  if movesover(board) : 
-    #if((board==board2).all()):
-    # print(score)
-    # print(board)
-    # print("inside movesover")
+  if movesover(board) :
     return 0
   
   if (ismax):
@@ -104,13 +95,7 @@ def minimax(board,depth,max_depth,ismax,player,alpha,beta):
         
         board[i][j]=move
         b=minimax(board,depth+1,max_depth,not (ismax),"opponent",alpha,beta) 
-       
-        #if(boo and depth1==1):
-         # print([i,j,move,b])    
-         # print(board)   
-        #print([b,best,min(best,b)])
         best=min(best,b)
-        #print([i,j,b,best])
         beta=min(best,beta)        
         board[i][j]='' 
         if beta <= alpha:  

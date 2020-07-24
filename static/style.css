@@ -209,4 +209,17 @@ select:hover {
   background-image: url("starclip.png");
   background-size: cover;
 }
-/*# sourceMappingURL=firstattempt.css.map */
+
+#rulepage {
+  background-color: #9ab5e1;
+  background-image: linear-gradient(315deg, #9ab5e1 0%, #f39fdc 74%);
+}
+
+h3 {
+  font-family: Georgia, serif;
+  letter-spacing: 3px;
+  color: black;
+  font-weight: 900;
+  font-size: 17px;
+}
+/*# sourceMappingURL=style.css.map */

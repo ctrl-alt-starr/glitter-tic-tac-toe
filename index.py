@@ -1,7 +1,7 @@
 import tictactoe
 import last_turn_tic_tac_toe
-global data 
-data= {
+global DATA 
+DATA= {
                 1:[0,0],
                 2:[0,1],
                 3:[0,2],
@@ -12,12 +12,12 @@ data= {
                 8:[2,1],
                 9:[2,2]
             }
-reversed_data = {tuple(value) : key for (key, value) in data.items()}
+reversed_data = {tuple(value) : key for (key, value) in DATA.items()}
 class Board:
-    def __init__(self,maxDepth,game):
+    def __init__(self,max_depth,game):
         self.board= [[ '', '', '' ], [ '', '', '' ],  [ '', '', '' ]]
         self.available_positions=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]]
-        self.maxDepth=maxDepth
+        self.max_depth=max_depth
         self.winner= None
         self.game=game
     def update_position(self,position,player_symbol,turn):
@@ -31,7 +31,7 @@ class Board:
         else:
           self.winner= last_turn_tic_tac_toe.eval(self.board,turn)  
         return self.winner
-    def isWinner(self):
+    def is_winner(self):
         if self.winner==10 or self.winner==-10:
             return True
         else:
@@ -41,7 +41,7 @@ class Board:
     def board_function(self):
         return self.board
     def depth_function(self):
-        return self.maxDepth
+        return self.max_depth
     def winner_orientation(self):
         for i in range(0,3):
             if(self.game!=2):
