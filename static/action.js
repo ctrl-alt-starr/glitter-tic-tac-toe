@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-
-<head>
-    <title>Glitter Tic-Tac</title>
-    <link rel="icon" type="image/png" href="/static/favicon2.png"/>
-    <link rel="stylesheet" type="text/css" href="static/firstattempt.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type=text/javascript>
         window.start = "no"
         window.moon = "/static/moon.png"
         window.star = "/static/star.png"
@@ -126,7 +118,7 @@
 
                                     }
                                     sound = document.createElement("audio");
-                                    win = "static/audio_file.mp3"
+                                    win = "static/win.mp3"
                                     lose = "static/lost.mp3"
                                     if (game == 1 || game == 3) {
                                         if (data[2] == "player") {
@@ -231,7 +223,7 @@
                                 }
                                 
                                 sound = document.createElement("audio");
-                                sound.src = "static/audio_file.mp3"
+                                sound.src = "static/win.mp3"
                                 sound.volume = 0.1;
                                 sound.play();
 
@@ -384,98 +376,4 @@
             sound.src = "static/lost.mp3"
             sound.volume = 0.1;
             sound.play();}
-    </script>
-
-</head>
-
-
-
-<header>
-    <div id="title">Tic-Tac-Toe!</div>
-
-</header>
-
-<div></div><a href="../help" target="_blank"><button id="help">HELP</button></a>
-<button id="reset" type="submit" onClick="refreshPage()">Reset</button></div>
-<div id="winner"> Tic Tac Toe with extra glitter <br><br>    ( ͡~ ͜ʖ ͡°)<br> </div>
-
-
-
-<body>
-    <div>
-        <table id="table">
-            <tr>
-
-                <td id="table1" onclick="human(1,'0')">
-                    <button type="button" class="btnmoon" id="symbolmoon1" onclick="human(1,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar1" onclick="human(1,'x')"></button>
-                    <img id="moon1" style="width:100px "></td>
-                <td class="vert" id="table2" onclick="human(2,0) ">
-                    <button type="button" class="btnmoon" id="symbolmoon2" onclick="human(2,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar2" onclick="human(2,'x')"></button>
-                    <img id="moon2" style="width:100px ">
-                </td>
-                <td id="table3" onclick="human(3,0) ">
-                    <button type="button" class="btnmoon" id="symbolmoon3" onclick="human(3,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar3" onclick="human(3,'x')"></button>
-                    <img id="moon3" style="width:100px "></td>
-            </tr>
-            <tr>
-                <td class="hori" id="table4" onclick="human(4,0)">
-                    <button type="button" class="btnmoon" id="symbolmoon4" onclick="human(4,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar4" onclick="human(4,'x')" onclick="human(1,star)"></button>
-                    <img id="moon4" style="width:100px "></td>
-                <td class="vert hori" id="table5" onclick="human(5,0) ">
-                    <button type="button" class="btnmoon" id="symbolmoon5" onclick="human(5,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar5" onclick="human(5,'x')"></button><img id="moon5" style="width:100px "></td>
-                <td class="hori" id="table6" onclick="human(6,0) ">
-                    <button type="button" class="btnmoon" id="symbolmoon6" onclick="human(6,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar6" onclick="human(6,'x')"></button><img id="moon6" style="width:100px "></td>
-            </tr>
-            <tr>
-                <td id="table7" onclick="human(7,0) ">
-                    <button type="button" class="btnmoon" id="symbolmoon7" onclick="human(7,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar7" onclick="human(7,'x')"></button><img id="moon7" style="width:100px "></td>
-                <td class="vert" id="table8" onclick="human(8,0) ">
-                    <button type="button " class="btnmoon" id="symbolmoon8" onclick="human(8,'o')"></button>
-                    <button type="button " class="btnstar" id="symbolstar8" onclick="human(8,'x')"></button><img id="moon8" style="width:100px "></td>
-                <td id="table9" onclick="human(9,0) ">
-                    <button type="button" class="btnmoon" id="symbolmoon9" onclick="human(9,'o')"></button>
-                    <button type="button" class="btnstar" id="symbolstar9" onclick="human(9,'x')"></button><img id="moon9" style="width:100px "></td>
-            </tr>
-        </table>
-    </div>
-    <form class="form-inline" id="grid">
-        <!--First Name-->
-
-        <div class="form-group">
-            <label for="game"><h5>Game</h5></label>
-            <select id="game">
-                    <option value="1" selected>Tic-Tac-Toe</option>
-                    <option value="2">Tac-Toe-Tic</option>
-                    <option value="3">Last turn Tic-Tac-Toe</option>
-                    
-                </select>
-        </div>
-        <div class="form-group">
-            <label for="opponent"><h5>Opponent</h5></label>
-            <select id="opponent" class="form-control" onchange="difficulty_setting(this)">
-                    <option value="computer" selected>Play against computer</option>
-                    <option value="friend">Play with friend</option>
-                </select>
-        </div>
-        <div class="form-group">
-            <label id="difficultyid" for="difficulty"><h5>Difficulty</h5></label>
-            <select id="difficulty" class="form-control">
-                <option value="0">Piece of cake</option>
-                <option value="2">Easy</option>
-                <option value="5">Hard</option>
-                <option value="10" selected>Impossible</option>
-            </select>
-        </div>
-
-        <button id="submit" type="submit" class="btn btn-default">New Game</button>
-    </form>
-</body>
-
-<footer> Developed by Varshaa KS and Uma Meenakshi </footer>
+    
