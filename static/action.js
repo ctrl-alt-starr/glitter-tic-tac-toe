@@ -34,38 +34,28 @@
                         },
 //{'winner':True,'winner_boxes':board.winner_boxes(),'whoWon':"opponent",'symbol':['None',opponent_symbol],'computermove':"None","updateopponent":False,"updateplayer":False}
                         
-                        success: function(data) {     
-                            console.log(data) 
-                            console.log("___________")
-                            console.log(id)
-                            console.log("___________")
+                        success: function(data) {
                         for (i = 0; i < 9; i++) {
                             document.getElementsByTagName("td")[i].style.cursor = "pointer";
                         }    
                         
                         if(data["winner"]=="tie"){
-                            console.log("inside here1")
                             if(data["updateplayer"]){
                                 updateposition(data["computermove"],data["symbol"][0])
                                 updateposition(id,data["symbol"][1])
                             }
-                            else if(data["updateopponent"]){                                
-                                console.log("winnerplayerupdate2")
+                            else if(data["updateopponent"]){
                                 updateposition(id,data["symbol"][1])
                             }
                             tie()
                             return null
                         }
                         else if(!data["winner"]&&data["updateopponent"]){
-                            console.log("inside here2")
                             if(data["updateplayer"]){
-                                console.log("1")
-                                console.log(data["symbol"])
                                 updateposition(data["computermove"],data["symbol"][0])
                                 updateposition(id,data["symbol"][1])
                             }
                             else if(data["opponent"]){
-                                console.log("1")
                                 updateposition(id,data["symbol"][1])
                             }
                             if(game==3) {
@@ -75,15 +65,11 @@
                             return null
                         }
                         else if(data["winner"]){
-                            console.log("inside here3")
                             if(data["updateplayer"]){
-                                console.log("1")
-                                console.log(data["symbol"])
                                 updateposition(data["computermove"],data["symbol"][0])
                                 updateposition(id,data["symbol"][1])
                             }
                             else if(data["opponent"]){
-                                console.log("1")
                                 updateposition(id,data["symbol"][1])
                             }
                             winnerupdate(data["winner_boxes"],data["whoWon"])
@@ -91,7 +77,6 @@
                             return null;
                         }
                         else{
-                            console.log("inside here4")
                             return null;
                         }
 
@@ -115,25 +100,20 @@
                         },
 
                         success: function(data) {
-                            console.log(data)
                             
-                            if(data["player2"]){    
-                                console.log("opponent")                            
+                            if(data["player2"]){                          
                                 document.getElementById("winner").innerHTML="Its Player 1's chance!"
                             }
-                            else{
-                                console.log("player")                            
+                            else{                          
                                 document.getElementById("winner").innerHTML="Its Player 2's chance!"
                             }
-                            if(data["winner"]=="tie"){
-                                console.log("inside here1")                                
+                            if(data["winner"]=="tie"){                                
                                 updateposition(id,data["symbol"])
                                 tie()
                                 return null
                             }
                             
                             else if(!data["winner"]&&data["updateplayer"]){
-                                console.log("inside here2")
                                 updateposition(id,data["symbol"])
                                 if(game==3) {
                                     disablebuttons(false,id)
@@ -141,14 +121,12 @@
                                 return null
                             }
                             else if(data["winner"]){
-                                console.log("inside here3")
                                 updateposition(id,data["symbol"])
                                 winnerupdate(data["winner_boxes"],data["whoWon"])
                                 disablebuttons(false,0)
                                 return null;
                             }
                             else{
-                                console.log("inside here4")
                                 return null;
                             }
     
@@ -244,8 +222,7 @@
                     var click1 = 'table' + i;
                     var click2 = 'symbolmoon' + i
                     var click3 = 'symbolstar' + i 
-                    clickarray.push(document.getElementById(click1).onclick)   
-                    console.log(clickarray[i])                
+                    clickarray.push(document.getElementById(click1).onclick)                
                     document.getElementById(click1).onclick = null;
                     document.getElementById(click2).disabled = false;
                     document.getElementById(click3).disabled = false;
@@ -254,7 +231,6 @@
                 }
             } else {
                 console.log("trying to disable buttons")
-
                 disablebuttons(false,0)
             }
         }
@@ -265,12 +241,12 @@
         function disablebuttons(start,id) {
             var i
             for (i = 1; i < 10; i++) {
-                if(id!=0){i=id
-                console.log("first if")}
+                if(id!=0){i=id}
                 var click1 = 'table' + i;
                 var click2 = 'symbolmoon' + i
                 var click3 = 'symbolstar' + i
                 if(!start&&id==0&&gamehasbeenplayedbefore){
+                    console.log("symbolmoon")
                     document.getElementById(click1).onclick= clickarray[i-1]}
                 document.getElementById(click2).disabled = true;
                 document.getElementById(click3).disabled = true;
@@ -290,10 +266,8 @@
 }
     function updateposition(position,symbol){
          click='moon'+position
-         console.log(symbol)
          if(symbol=="x"){document.getElementById(click).src = star}
          else if (symbol=="o"){
-             console.log("moon")
              document.getElementById(click).src = moon}
     }
     function winnerupdate(winner_boxes,player){
@@ -307,7 +281,6 @@
         sound = document.createElement("audio");
         win = "static/win.mp3"
         lose = "static/lost.mp3"
-        console.log(player)
         if (player == "player") {
                 if(opponent=="computer"){
                     sound.src = lose
