@@ -35,31 +35,39 @@ def ai():
     symbol=(request.form["2"]) # This is for Last turn tic tac toe
     position=data[id]
     if(board.isWinner()):#If a game has already been won and the player is attempting to play again
-        return jsonify([0,0,0])
+        return jsonify({'winner':False,'winner_boxes':"None",'whoWon':"None",'symbol':["None","None"],'computermove':"None","updateopponent":False,"updateplayer":False}) 
+        #[winner,winnerboxes,who_won,[player_symbol,opponent_symbol],bestmove]]
     if(position in board.available_positions_function() and not (board.isWinner())):
        if(game==3):
            opponent_symbol=symbol
        else:
            opponent_symbol='o'
        board.update_position(position,opponent_symbol,"opponent")
+       if(board.isWinner()):# If the human player has won with their move
+           if(game==2):winner="player"
+           else:winner="opponent"
+           return jsonify({'winner':True,'winner_boxes':board.winner_boxes(),'whoWon':winner,'symbol':['None',opponent_symbol],'computermove':"None","updateopponent":False,"updateplayer":True}) 
+        
        bestmove=game_redirection(board.board_function(),board.depth_function(),board.available_positions_function(),game)
        if(bestmove[0]==[-1,-1]): #When all the moves are over, the algorithm simply returns [-1,-1]
-           return jsonify([0,0,position])
-       else: bestmove_id=reversed_data[tuple(bestmove[0])]
-       if(board.isWinner()):# If the human player has won with their move
-           return jsonify([0,board.winner_boxes(),"opponent",['None',opponent_symbol,"None"]])
+           return jsonify({'winner':False,'winner_boxes':"None",'whoWon':"None",'symbol':["None",opponent_symbol],'computermove':"None","updateopponent":True,"updateplayer":False})
+       bestmove_id=reversed_data[tuple(bestmove[0])]
+       
        if(board.available_positions!=[]):
           if(game==3):
              player_symbol=bestmove[1]
           else:
              player_symbol='x'
           board.update_position(bestmove[0],player_symbol,"player") 
-          if((board.isWinner())): #If the computer has won with their move
-             return jsonify([0,board.winner_boxes(),"player",[player_symbol,opponent_symbol,bestmove_id]])     
-          return jsonify([bestmove_id,0,0,[player_symbol,opponent_symbol]]) #Nobody won, the game is still going on
-       else: return jsonify(["None",0,0]) # It is a tie
+       if(board.available_positions!=[]):
+          if((board.isWinner())):#If the computer has won with their move
+             if(game!=2):winner="player"
+             else:winner="opponent"
+             return jsonify({'winner':True,'winner_boxes':board.winner_boxes(),'whoWon':winner,'symbol':[player_symbol,opponent_symbol],'computermove':bestmove_id,"updateopponent":True,"updateplayer":True})     
+          return jsonify({'winner':False,'winner_boxes':"None",'whoWon':"None",'symbol':[player_symbol,opponent_symbol],'computermove':bestmove_id,"updateopponent":True,"updateplayer":True}) #Nobody won, the game is still going on
+       else: return jsonify({'winner':"tie",'winner_boxes':"None",'whoWon':"None",'symbol':["None",opponent_symbol],'computermove':bestmove_id,"updateopponent":True,"updateplayer":False}) # It is a tie
     else:
-         return jsonify([0,0,0]) #Nobody won but the moves are over
+         return jsonify({'winner':False,'winner_boxes':"None",'whoWon':"None",'symbol':["None","None"],'computermove':"None","updateopponent":False,"updateplayer":False}) #Nobody won but the moves are over
 @app.route('/setting',methods= ['POST'])
 def setting():
   global game,difficulty,opponent,board,start,i
@@ -78,21 +86,30 @@ def human():
     position=data[id]
     if(position in board.available_positions_function() and not (board.isWinner())):
          if(i%2==0):
-             if(game!=3):board.update_position(position,'x',"player")
-             else: board.update_position(position,symbol,"player")
+             if(game!=3):
+                 symbol='o'
+             board.update_position(position,symbol,"player")
+             
              i+=1
-             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player1",symbol])
-             elif(not len(board.available_positions_function())):return jsonify(["tie","player1"])
-             else: return jsonify(["player1",0])     
+             if(board.isWinner()):
+                 if(game==2):winner="opponent"
+                 else:winner="player"
+                 return jsonify({'winner':True,'winner_boxes':board.winner_boxes(),'whoWon':winner,'symbol':symbol,"updateplayer":True,"updateoppponent":False,"player2":False})
+             elif(not len(board.available_positions_function())):return jsonify({'winner':"tie",'winner_boxes':"None",'whoWon':"None",'symbol':symbol,"updateplayer":True,"updateoppponent":False,"player2":False})
+             else: return jsonify({'winner':False,'winner_boxes':"None",'whoWon':"None",'symbol':symbol,"updateplayer":True,"updateoppponent":False,"player2":False})     
              
        
          else:
-             if(game!=3):board.update_position(position,'o',"opponent")
-             else: board.update_position(position,symbol,"opponent")
+             if(game!=3):
+                 symbol='x'
+             board.update_position(position,symbol,"opponent")
              i+=1
-             if(board.isWinner()):return jsonify([0,board.winner_boxes(),"player2",symbol])
-             elif(not len(board.available_positions_function())):return jsonify(["tie","player2"])
-             else: return jsonify(["player2",0])
+             if(board.isWinner()):
+                 if(game!=2):winner="opponent"
+                 else:winner="player"
+                 return jsonify({'winner':True,'winner_boxes':board.winner_boxes(),'whoWon':winner,'symbol':symbol,"updateplayer":True,"updateoppponent":True,"player2":True})
+             elif(not len(board.available_positions_function())):return jsonify({'winner':"tie",'winner_boxes':"None",'whoWon':"None",'symbol':symbol,"updateplayer":True,"updateoppponent":True,"player2":True})
+             else: return jsonify({'winner':False,'winner_boxes':"None",'whoWon':"None",'symbol':symbol,"updateplayer":True,"updateoppponent":True,"player2":True})
             
     else:
         return jsonify([0,0])

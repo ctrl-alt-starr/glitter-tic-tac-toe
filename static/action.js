@@ -6,6 +6,7 @@
         window.gamehasbeenplayedbefore=false
 
         function human(id, symbol) {
+            
             if(iterative==0&&game==3 && id==5){
                 window.alert("In Last turn tic-tac-toe,the first move cannot be in the centre square!")
                 return null;
@@ -26,139 +27,70 @@
 
                         },
                         beforeSend: function() {
-                            document.documentElement.style.cursor = 'wait';
                             for (i = 0; i < 9; i++) {
                                 document.getElementsByTagName("td")[i].style.cursor = "wait";
                             }
 
                         },
-
-                        success: function(data) {                           
-                            document.documentElement.style.cursor = 'pointer';
-                            for (i = 0; i < 9; i++) {
-                                document.getElementsByTagName("td")[i].style.cursor = "pointer";
+//{'winner':True,'winner_boxes':board.winner_boxes(),'whoWon':"opponent",'symbol':['None',opponent_symbol],'computermove':"None","updateopponent":False,"updateplayer":False}
+                        
+                        success: function(data) {     
+                            console.log(data) 
+                        for (i = 0; i < 9; i++) {
+                            document.getElementsByTagName("td")[i].style.cursor = "pointer";
+                        }    
+                        
+                        if(data["winner"]=="tie"){
+                            console.log("inside here1")
+                            if(data["updateplayer"]){
+                                updateposition(data["computermove"],data["symbol"][0])
+                                updateposition(id,data["symbol"][1])
                             }
-                            if(data[0]=='None'&&data[1]==0&&data[2]==0){tie(0,0,0)} //tie
-                            if (data[0] != 0) { //There is no winner, no tie and there are moves left
-                                if (game != 3) {
-                                    click1 = 'moon' + id
-                                    document.getElementById(click1).src = moon
-                                    if (data[0] != "None") {
-                                        click2 = 'moon' + data[0]
-                                        document.getElementById(click2).src = star
-                                    }
-                                } else {
-
-                                    click1 = 'moon' + id
-                                    if (data[3][1] == "x") {
-                                        document.getElementById(click1).src = star
-                                    } else {
-                                        document.getElementById(click1).src = moon
-                                    }
-                                                                   
-                                    disablebuttons(false,id)
-                                    if (data[0] != "None") {
-                                        click4 = 'moon' + data[0]
-                                        if (data[3][0] == "x") {
-                                            document.getElementById(click4).src = star
-                                        } else {
-                                            document.getElementById(click4).src = moon
-                                        }
-                                        disablebuttons(false,data[0])
-                                    }
-                                    
-
-                                }
-
-
-
-                            } else {//There is a winner or its a null move
-
-                                if (data[1] != 0) {//There is a winner                                 
-
-                                    var x;
-                                    for (x of data[1]) {
-
-                                        var click = 'table' + x
-                                        var click1 = 'moon' + x
-                                        
-                                        document.getElementById(click).style.background = "#FF1493";
-                                        if (game==1) {
-                                            if (data[2] == 'player') {
-                                                document.getElementById(click1).src = star;
-                                            } else {
-                                                document.getElementById(click1).src = moon;
-                                            }
-                                        }
-
-
-                                    }
-                                    if(game==2){
-                                        var click1='moon'+id
-                                        document.getElementById(click1).src = moon;
-                                        if(data[3][2]!="None"){                                            
-                                            var click1='moon'+data[3][2]
-                                            document.getElementById(click1).src = star;                                            
-                                        }
-                                    }
-                                    if (game == 3) {
-                                        click1 = 'moon' + id                                    
-                                        if (data[3][1] == "x") {
-                                            document.getElementById(click1).src = star;
-                                        } else if (data[3][1] == "o") {
-                                            document.getElementById(click1).src = moon
-                                        }
-                                        click2 = 'moon' + data[3][2]
-                                        if (data[3][0] == "x") {
-                                            document.getElementById(click2).src = star
-                                        } else if (data[3][0] == "o") {                                
-                                            document.getElementById(click2).src = moon
-                                        }
-                                        disablebuttons(false,0)
-
-                                    }
-                                    sound = document.createElement("audio");
-                                    win = "static/win.mp3"
-                                    lose = "static/lost.mp3"
-                                    if (game == 1 || game == 3) {
-                                        if (data[2] == "player") {
-                                            document.getElementById("winner").innerHTML="This is you right now <br> (ಥ ͜ʖಥ) <br>, isn't? Sucks to lose lol"
-                                            sound.src = lose
-                                        } else {
-                                            sound.src = win
-                                            document.getElementById("winner").innerHTML="This is me right now<br> ᕕ༼✪ل͜✪༽ᕗ So proud of your win kiddo"
-                                        }
-                                    } else {
-                                        if (data[2] == "player") {
-                                            sound.src = win
-                                            document.getElementById("winner").innerHTML="Ah the taste of victory <br>(◕‿◕✿)"
-                                        } else {
-                                            sound.src = lose
-                                            document.getElementById("winner").innerHTML="Me: You Lose <br> You: ( ⚈̥̥̥̥̥́⌢⚈̥̥̥̥̥̀) "
-                                        }
-                                    }
-                                    sound.volume = 0.1;
-                                    sound.play();
-
-                                }
-                                if(data[0]==0 && data[1]==0){//moves are over but have to update the previous moves
-                                    if(data[2]!=0){
-                                        click='moon'+id
-                                        if(game!=3){
-                                            document.getElementById(click).src = moon
-                                        }
-                                        else{
-                                            disablebuttons(false,id);
-                                            if(symbol=='x'){document.getElementById(click).src = star
-                                            }
-                                            else{document.getElementById(click).src = moon}
-                                        }
-                                                                               
-                                    }
-                                }
-
+                            else if(data["updateopponent"]){                                
+                                console.log("winnerplayerupdate2")
+                                updateposition(id,data["symbol"][1])
                             }
-
+                            tie()
+                            return null
+                        }
+                        else if(!data["winner"]&&data["updateopponent"]){
+                            console.log("inside here2")
+                            if(data["updateplayer"]){
+                                console.log("1")
+                                console.log(data["symbol"])
+                                updateposition(data["computermove"],data["symbol"][0])
+                                updateposition(id,data["symbol"][1])
+                            }
+                            else if(data["opponent"]){
+                                console.log("1")
+                                updateposition(id,data["symbol"][1])
+                            }
+                            if(game==3) {
+                                disablebuttons(false,id)
+                                disablebuttons(false,data["computermove"])
+                            }
+                            return null
+                        }
+                        else if(data["winner"]){
+                            console.log("inside here3")
+                            if(data["updateplayer"]){
+                                console.log("1")
+                                console.log(data["symbol"])
+                                updateposition(data["computermove"],data["symbol"][0])
+                                updateposition(id,data["symbol"][1])
+                            }
+                            else if(data["opponent"]){
+                                console.log("1")
+                                updateposition(id,data["symbol"][1])
+                            }
+                            winnerupdate(data["winner_boxes"],data["whoWon"])
+                            disablebuttons(false,0)
+                            return null;
+                        }
+                        else{
+                            console.log("inside here4")
+                            return null;
+                        }
 
                         }
 
@@ -180,54 +112,45 @@
                         },
 
                         success: function(data) {
-                            if(data[0]=="tie"){                               
-                                tie(id,data[1],symbol);
-                                return 0;
-                            }
                             console.log(data)
-                            if (data[0] != 0) {// there is no winner yet and the move is not a null move
-                                click = 'moon' + id
-                                if (game != 3) {
-                                    if (data[0] == "player1") {
-                                        document.getElementById(click).src = moon;
-                                        document.getElementById("winner").innerHTML="Its Player 2's chance!"
-                                    } else if (data[0] == "player2") {
-                                        document.getElementById(click).src = star;
-                                        document.getElementById("winner").innerHTML="Its Player 1's chance!"
-                                    }
-                                } else {
-                                    if (symbol == 'x') {
-                                        document.getElementById(click).src = star;
-                                    } else {
-                                        document.getElementById(click).src = moon;
-                                    }
+                            if(data["player2"]){    
+                                console.log("opponent")                            
+                                document.getElementById("winner").innerHTML="Its Player 1's chance!"
+                            }
+                            else{
+                                console.log("player")                            
+                                document.getElementById("winner").innerHTML="Its Player 2's chance!"
+                            }
+                            if(data["winner"]=="tie"){
+                                console.log("inside here1")                                
+                                updateposition(id,data["symbol"])
+                                tie()
+                                return null
+                            }
+                            
+                            else if(!data["winner"]&&data["updateplayer"]){
+                                console.log("inside here2")
+                                updateposition(id,data["symbol"])
+                                if(game==3) {
                                     disablebuttons(false,id)
-
                                 }
+                                return null
                             }
-                            if (data[1] != 0) {//winner
-                                if(game==3&&data[3]=="x" || data[2]=="player2"){image=star}
-                                else if((game==3&&data[3]=="o") || data[2]=="player1"){image=moon}
-                                click = 'moon' + id
-                                document.getElementById(click).src = image;
-                                if(game!=2&&data[2]=="player1" || game==2&&data[2]=="player2"){document.getElementById("winner").innerHTML="Player1 is a mighty fella! The moon wins after all"}
-                                else if(game==2&&data[2]=="player1" || game!=2&&data[2]=="player2"){ document.getElementById("winner").innerHTML="Player2 is marvellous! The glitter of the stars defeated the moon!"}
-                                disablebuttons(false,0)                        
-                                var x;
-                                for (x of data[1]) {
-                                    click = 'table' + x           
-                                    document.getElementById(click).style.background = "#FF1493";                         
-                                                                   
-                                                                       
-                        
-                                }
-                                
-                                sound = document.createElement("audio");
-                                sound.src = "static/win.mp3"
-                                sound.volume = 0.1;
-                                sound.play();
-
+                            else if(data["winner"]){
+                                console.log("inside here3")
+                                updateposition(id,data["symbol"])
+                                winnerupdate(data["winner_boxes"],data["whoWon"])
+                                disablebuttons(false,0)
+                                return null;
                             }
+                            else{
+                                console.log("inside here4")
+                                return null;
+                            }
+    
+                            
+    
+                          
 
 
                         }
@@ -286,6 +209,7 @@
                             document.getElementById("title").style.marginLeft = "20px";
                         }
                         gamesettings(game);
+                        
 
 
                     });
@@ -325,6 +249,7 @@
                     document.getElementById(click3).style.visibility = "visible";
                 }
             } else {
+                console.log("trying to disable buttons")
 
                 disablebuttons(false,0)
             }
@@ -350,30 +275,67 @@
                 if(id!=0){break;}
             }
         }
-        function tie(id,player,symbol){ 
-            if(id!=0){
-                click = 'moon' + id
-                if (game != 3) {
-                   if (player == "player1") {
-                        document.getElementById(click).src = moon;}
-                    else{document.getElementById(click).src = star;    }
-                                           
-                     
-                 } else {
-                       if (symbol == 'x') {
-                           document.getElementById(click).src = star;
-                        } else {
-                         document.getElementById(click).src = moon;
-                         }
-                        disablebuttons(false,id)
-
-                        }    
-            }                            
+ function tie(){                            
             
-            
+            if(game==3){disablebuttons(false,0)}
             document.getElementById("winner").innerHTML="Aww shucks it's a tie <br> ¯\_| ✖ 〜 ✖ |_/¯"
             sound = document.createElement("audio");                                    
             sound.src = "static/lost.mp3"
             sound.volume = 0.1;
-            sound.play();}
-    
+            sound.play();
+}
+    function updateposition(position,symbol){
+         click='moon'+position
+         console.log(symbol)
+         if(symbol=="x"){document.getElementById(click).src = star}
+         else if (symbol=="o"){
+             console.log("moon")
+             document.getElementById(click).src = moon}
+    }
+    function winnerupdate(winner_boxes,player){
+        var x;
+        for (x of winner_boxes) {
+
+            var click = 'table' + x
+            var click1 = 'moon' + x            
+            document.getElementById(click).style.background = "#FF1493";}
+           
+        sound = document.createElement("audio");
+        win = "static/win.mp3"
+        lose = "static/lost.mp3"
+        console.log(player)
+        if (player == "player") {
+                if(opponent=="computer"){
+                    sound.src = lose
+                    document.getElementById("winner").innerHTML="This is you right now <br> (ಥ ͜ʖಥ) <br>, isn't? Sucks to lose lol"
+               }
+               else{
+                sound.src = win
+                if(game==3){document.getElementById("winner").innerHTML="Omg! Player 1 sure knows how to play last turn tic tac toe!"
+            }
+                 else{document.getElementById("winner").innerHTML="Player1 is a mighty fella! The moon wins after all"}  
+                }
+                
+            } 
+        else {
+                sound.src = win
+                if (opponent == "computer"){
+                    document.getElementById("winner").innerHTML="This is me right now<br> ᕕ༼✪ل͜✪༽ᕗ So proud of your win kiddo"
+                } 
+              else{
+                if(game!=3){ document.getElementById("winner").innerHTML="Player2 is marvellous! The glitter of the stars defeated the moon!"
+            }else{
+                document.getElementById("winner").innerHTML="Hey player 2? Did you spend your whole life playing this game or what? Because you are splendid!"
+            }
+
+            }
+            }
+        
+        
+        sound.volume = 0.1;
+        sound.play();
+        if(game==3){
+        disablebuttons(false,0)
+    }
+}
+
